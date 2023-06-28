@@ -35,7 +35,7 @@ export default {
 <template>
     <div class="container" style="background-color: white;">
     <div class="logo">
-      <img src="../assets/Logos/Usach P1.png" alt="Logo">
+      <img src="../assets/Logos/Usach P2.png" alt="Logo">
     </div>
     <div class="login">
       <div class="login__container">
