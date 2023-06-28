@@ -33,12 +33,14 @@ export default {
 
 
 <template>
-  <div id="app">
-    <div class="logo" style="background: url(&quot;assets/Logos/Usach%20P2.png&quot;) center / contain no-repeat;"></div>
+    <div class="container" style="background-color: white;">
+    <div class="logo">
+      <img src="../assets/Logos/Usach P1.png" alt="Logo">
+    </div>
     <div class="login">
       <div class="login__container">
-        <img class="login__logo" src="../assets/Logos/Usach P1.png" alt="Logo">
-        <h4 class="login__title">Bienvenido al Sistema de Tickets</h4>
+      <div class="login">
+        <div class="title"><h4 class="login__title">Bienvenido al Sistema de Tickets</h4></div>
         <form class="login__form" @submit.prevent="submitForm">
           <div class="login">
             <input class="login__input" type="email" placeholder="Correo Institucional" v-model="email" required>
@@ -53,6 +55,7 @@ export default {
         <br/>
         <router-link class="login__link" to="/forgot-password">¿Olvidó su contraseña?</router-link>
       </div>
+      </div>
     </div>
   </div>
 </template>
@@ -60,7 +63,42 @@ export default {
 <style>
 body {
   background: #00a499;
-  margin: 0;
-  padding: 0;
 }
+.container {
+  width: 90%;
+  height: 90vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Otros estilos adicionales para el contenedor */
+}
+
+.logo{
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+.logo img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /*que sea del tamaño del padre*/
+  object-fit: cover;
+}
+
+.title{
+  color: black;
+}
+
+
+
+
+
 </style>
