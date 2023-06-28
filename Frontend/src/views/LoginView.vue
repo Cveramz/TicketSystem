@@ -1,4 +1,6 @@
 <script>
+
+
 export default {
   name: 'LoginView',
   data() {
@@ -65,8 +67,8 @@ body {
   background: #00a499;
 }
 .container {
-  width: 90%;
-  height: 90vh;
+  width: 80%;
+  height: 80vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,7 +76,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* Otros estilos adicionales para el contenedor */
+  border-radius: 20px;
 }
 
 .logo{
@@ -94,8 +96,40 @@ body {
 }
 
 .title{
+  font-family: 'inherit';
   color: black;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
 }
+
+.login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.login__container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.login__form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  flex-direction: column;
+}
+
+
 
 
 
