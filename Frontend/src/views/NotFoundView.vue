@@ -1,30 +1,4 @@
 <script>
-export default {
-  name: 'RegisterView',
-  data() {
-    return {
-      nombres: '',
-      apellidos: '',
-      correo: '',
-      contrasena: '',
-      repetirContrasena: '',
-      correoRules: [
-        v => !!v || 'El correo es requerido',
-        v => /(.+)@(.+){2,}\.(.+){2,}/.test(v) || 'El correo no es válido',
-        v => /@usach\.cl$/.test(v) || 'El correo debe ser de @usach.cl'
-      ]
-    };
-  },
-  methods: {
-    submitForm() {
-        // Lógica de inicio de sesión aquí
-        alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
-        //mostrar en pantalla lo enviado
-        alert('Correo: ' + this.email + '\nContraseña: ' + this.password);
-        this.$router.push('/login');  // Redirigir a la vista de inicio
-    },
-  }
-};
 </script>
 
 
