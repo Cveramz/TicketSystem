@@ -7,27 +7,36 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      emailrules: [
+        v => !!v || 'El correo es requerido',
+        v => /.+@usach\.cl$/.test(v) || 'El correo debe ser @usach.cl',
+      ],
+      passwordrules: [
+        v => !!v || 'La contraseña es requerida',
+      ],
     };
   },
   methods: {
     submitForm() {
-      if (this.validarCorreo()) {
+      if (this.validarInformacion()) {
         // Lógica de inicio de sesión aquí
         alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
-        //mostrar en pantalla lo enviado
+        // Mostrar en pantalla lo enviado
         alert('Correo: ' + this.email + '\nContraseña: ' + this.password);
-        this.$router.push('#');  // Redirigir a la vista de inicio
-      } else {
+        this.redirectToPage(); // Redirigir a la vista de inicio
       }
     },
-    validarCorreo() {
-      if (this.email.indexOf('@usach.cl') === -1) {
-        alert('No se ha detectado su correo institucional, recuerde que debe ser @usach.cl\nIngrese nuevamente su correo de forma correcta por favor');
+    validarInformacion() {
+      if (this.email.indexOf('@usach.cl') === -1 || this.password === '') {
+        alert('Revise que los datos ingresados sean correctos');
         return false; // El correo es inválido
       } else {
         return true; // El correo es válido
       }
+    },
+    redirectToPage() {
+      // Redireccionar a la página deseada
+      this.$router.push('/register');
     }
   }
 };
@@ -35,37 +44,54 @@ export default {
 
 
 <template>
-    <div class="container" style="background-color: white;">
+  <div class="container" style="background-color: white;">
     <div class="logo">
       <img src="../assets/Logos/Usach P2.png" alt="Logo">
     </div>
     <div class="login">
       <div class="login__container">
-      <div class="login">
-        <div class="title"><h4 class="login__title">Bienvenido al Sistema de Tickets</h4></div>
-        <form class="login__form" @submit.prevent="submitForm">
-          <div class="login">
-            <input class="login__input" type="email" placeholder="Correo Institucional" v-model="email" required>
+        <div class="login">
+          <div class="title">
+            <h4 class="login__title">Bienvenido al Sistema de Tickets</h4>
           </div>
-          <div class="login">
-            <input class="login__input" type="password" placeholder="Contraseña" v-model="password" required>
-          </div>
-          <button class="login__button" type="submit">Entrar</button>
-        </form>
-        
-        <router-link class="login__link" to="/register">Crear cuenta</router-link>
-        <br/>
-        <router-link class="login__link" to="/forgot-password">¿Olvidó su contraseña?</router-link>
-      </div>
+          <form class="login__form" @submit.prevent="submitForm">
+            <v-card class="login__card">
+              <v-card-text>
+                <v-text-field class="login__input" type="email" label="Correo Institucional" v-model="email"
+                  :rules="emailrules" required></v-text-field>
+
+                <v-text-field class="login__input" type="password" label="Contraseña" v-model="password"
+                  :rules="passwordrules" required></v-text-field>
+              </v-card-text>
+
+
+              <v-card-actions class="sesionboton">
+                <v-btn color="#ffffff" dark rounded @click="submitForm">Iniciar sesión</v-btn>
+              </v-card-actions>
+
+
+              <v-card-actions class="invitadoboton">
+                <v-btn color="#ffffff" dark rounded>Iniciar como invitado</v-btn>
+              </v-card-actions>
+            </v-card>
+
+
+          </form>
+          <router-link class="login__link" to="/register">Crear cuenta</router-link>
+          <router-link class="login__link" to="/forgot-password">¿Olvidó su contraseña?</router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+
 body {
   background: #00a499;
 }
+
 .container {
   width: 80%;
   height: 80vh;
@@ -79,13 +105,13 @@ body {
   border-radius: 20px;
 }
 
-.logo{
+.logo {
   display: flex;
   justify-content: flex-start;
   width: 50%;
 }
 
-.logo img{
+.logo img {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,15 +121,15 @@ body {
   object-fit: cover;
 }
 
-.title{
-  font-family: 'inherit';
+.title {
+  font-family: 'Nunito', sans-serif;
   color: black;
   font-size: 30px;
   font-weight: 600;
   text-align: center;
 }
 
-.login{
+.login {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,7 +138,7 @@ body {
   flex-direction: column;
 }
 
-.login__container{
+.login__container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,19 +146,33 @@ body {
   height: 100%;
 }
 
-.login__form{
+.login__form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 60%;
-  flex-direction: column;
+  width: 140%;
+  height: 70%;
+  margin-top: 10%;
+
 }
 
+.login__card {
+  max-width: 400px;
+  width: 100%;
+}
 
+.sesionboton {
+  background-color: #EA7600;
+  display: flex;
+  justify-content: center;
+}
 
-
-
+.invitadoboton {
+  background-color: #EA3800;
+  display: flex;
+  justify-content: center;
+}
 
 
 </style>

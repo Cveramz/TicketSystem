@@ -2,16 +2,26 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/LoginView.vue';
 
 const routes = [
+  ,
+  {
+    path: '/:catchAll(.*)',
+    component: () => import('../views/NotFoundView.vue')
+  },
   {
     path: '/',
-    name: 'login',
+    name: 'home',
     component: LoginView
   },
   // otras rutas...
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/HomeView.vue')
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/RegisterView.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
   }
 ];
 
