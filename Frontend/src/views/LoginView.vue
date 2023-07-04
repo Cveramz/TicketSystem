@@ -1,13 +1,13 @@
 <script>
 
 
-
 export default {
   name: 'LoginView',
   data() {
     return {
       email: '',
       password: '',
+      recordarUsuario: false,
       emailrules: [
         v => !!v || 'El correo es requerido',
         v => /.+@usach\.cl$/.test(v) || 'El correo debe ser @usach.cl',
@@ -18,10 +18,19 @@ export default {
     };
   },
   methods: {
+
     submitForm() {
       if (this.validarInformacion()) {
         // Lógica de inicio de sesión aquí
         alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
+        if (this.recordarUsuario) {
+        // Calcular fecha de expiración en 1 día
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1);
+        // Establecer cookie con el nombre de usuario y fecha de expiración
+        document.cookie = `usuario=${this.email}; expires=${expirationDate.toUTCString()}; path=/`;
+      }
+
         // Mostrar en pantalla lo enviado
         alert('Correo: ' + this.email + '\nContraseña: ' + this.password);
         this.redirectToPage(); // Redirigir a la vista de inicio
@@ -59,13 +68,13 @@ export default {
             <v-card class="login__card">
               <v-card-text>
                 <v-text-field class="login__input" type="email" label="Correo Institucional" v-model="email"
-                  :rules="emailrules" required></v-text-field>
+  :rules="emailrules" required autocomplete="email"></v-text-field>
 
-                <v-text-field class="login__input" type="password" label="Contraseña" v-model="password"
-                  :rules="passwordrules" required></v-text-field>
+  <v-text-field class="login__input" type="password" label="Contraseña" v-model="password"
+  :rules="passwordrules" required autocomplete="current-password"></v-text-field>
               </v-card-text>
 
-
+              <v-checkbox v-model="recordarUsuario" label="Recordar usuario" color="red" value="red" class="checkbox"></v-checkbox>
               <v-card-actions class="sesionboton">
                 <v-btn color="#ffffff" dark rounded @click="submitForm">Iniciar sesión</v-btn>
               </v-card-actions>
@@ -75,6 +84,7 @@ export default {
                 <v-btn color="#ffffff" dark rounded>Iniciar como invitado</v-btn>
               </v-card-actions>
             </v-card>
+      
 
 
           </form>
@@ -132,6 +142,7 @@ body {
 }
 
 .login {
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -175,6 +186,11 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.checkbox{
+  height: 12%;
+}
+
 
 
 </style>
