@@ -1,10 +1,14 @@
 <script>
+
+import RegisterDataService from '../services/RegisterDataService';
+
 export default {
   name: 'RegisterView',
   data() {
     return {
       nombres: '',
       apellidos: '',
+      rut: '',
       correo: '',
       contrasena: '',
       repetirContrasena: '',
@@ -16,6 +20,8 @@ export default {
     };
   },
   methods: {
+
+
     submitForm() {
         // Lógica de inicio de sesión aquí
         alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
@@ -45,6 +51,8 @@ export default {
                 <v-text-field class="register__input" label="Nombres" v-model="nombres" required></v-text-field>
 
                 <v-text-field class="register__input" label="Apellidos" v-model="apellidos" required></v-text-field>
+
+                <v-text-field class="register__input" label="RUT" v-model="rut" required></v-text-field>
 
                 <v-text-field class="register__input" type="email" label="Correo" v-model="correo" :rules="correoRules"
                   required></v-text-field>
@@ -76,7 +84,7 @@ export default {
 
 .container {
   width: 80%;
-  height: 85vh;
+  height: 90vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -127,7 +135,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   width: 90%;
-  height: 80%;
+  height: 90%;
 }
 
 .register__input{

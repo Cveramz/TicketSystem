@@ -1,5 +1,6 @@
 <script>
 
+import LoginService from "../services/LoginDataService.js";
 
 export default {
   name: 'LoginView',
@@ -165,7 +166,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 140%;
-  height: 70%;
+  height: 55%;
   margin-top: 10%;
 
 }
