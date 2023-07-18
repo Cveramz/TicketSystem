@@ -1,6 +1,5 @@
 package sistemaTicket.backend.services;
 
-import org.springframework.web.bind.annotation.*;
 import sistemaTicket.backend.entities.UsuarioEntity;
 import sistemaTicket.backend.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +24,13 @@ public class UsuarioService {
 
     public Optional<UsuarioEntity> obtenerUsuario(Long id){
         return usuarioRepository.findById(id);
+    }
+
+    public Optional<UsuarioEntity> obtenerListadoRut(Long rut){
+        return usuarioRepository.findById(rut);
+    }
+
+    public UsuarioEntity getOneRut(String rut){
+        return null;
     }
 }
