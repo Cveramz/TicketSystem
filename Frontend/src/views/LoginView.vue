@@ -107,7 +107,7 @@ body {
 
 .container {
   width: 80%;
-  height: 80vh;
+  height: 90vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
