@@ -20,11 +20,13 @@ public class TicketController{
     }
 
     @GetMapping("/tickets/")
+    @CrossOrigin("*")
     public Iterable<TicketEntity> obtenerTodosTicket(){
         return ticketService.obtenerTodosTicket();
     }
 
-    @GetMapping("/ticket/{id}") //colocar nombres mas represetativos eje: /ticket/rut=?/{rut}, mientras mas especifico sea el url, mejor sera la busqueda.
+    @GetMapping("/ticket/{id}")
+    @CrossOrigin("*")
     public Optional<TicketEntity> obtenerIdTicket(@PathVariable Long id){
         return ticketService.obtenerIdTicket(id);
     }

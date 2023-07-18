@@ -16,23 +16,23 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173") // para realizar las peticiones
 
 @RestController
-public class UsuarioController {
+public class UsuarioController{
     @Autowired
     UsuarioService usuarioService;
 
-    @PostMapping(value ="/usuario/")
-    public ResponseEntity<UsuarioEntity> guardar(@RequestBody UsuarioEntity usuarioEntityNuevo){
+    @PostMapping(value = "/usuario/")
+    public ResponseEntity<UsuarioEntity> guardar(@RequestBody UsuarioEntity usuarioEntityNuevo) {
         UsuarioEntity objeto = usuarioService.guardar(usuarioEntityNuevo);
         return new ResponseEntity<UsuarioEntity>(objeto, HttpStatus.OK);
     }
 
     @GetMapping("/usuarios/")
-    public Iterable<UsuarioEntity> todos(){
+    public Iterable<UsuarioEntity> todos() {
         return usuarioService.todos();
     }
 
     @GetMapping("/usuario/{id}")
-    public Optional<UsuarioEntity> obtenerUsuario(@PathVariable Long id){
+    public Optional<UsuarioEntity> obtenerUsuario(@PathVariable Long id) {
         return usuarioService.obtenerUsuario(id);
     }
 }
