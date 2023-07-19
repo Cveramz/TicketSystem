@@ -19,6 +19,7 @@ public class AdministradorEntity{
     private String Nombre;
     private String Correo;
     private String Password;
+    private String descripcion; //El administrador puede dar una descripcion para crearlos
     private Rol rol;
     public Rol getRol() { //Operaciones para retornar el rol del administrador
         return rol;

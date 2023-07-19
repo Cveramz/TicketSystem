@@ -21,5 +21,6 @@ public class TicketEntity{
     private String descripcion;
     private String consulta;
     private String comentarios;
-    private Date fecha;
+    private String creacion; //Usuario que crea el ticket
+    private Date fecha = new Date();
 }

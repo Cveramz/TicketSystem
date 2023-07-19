@@ -35,6 +35,7 @@ public class UsuarioController{
     public Optional<UsuarioEntity> obtenerUsuario(@PathVariable Long id) {
         return usuarioService.obtenerUsuario(id);
     }
+
 }
 /*
 Usar libreria "axios"

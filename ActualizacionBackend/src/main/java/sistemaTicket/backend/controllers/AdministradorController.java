@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sistemaTicket.backend.entities.AdministradorEntity;
+import sistemaTicket.backend.entities.TicketEntity;
 import sistemaTicket.backend.services.AdministradorService;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Optional;
 
 
 @RestController
@@ -15,39 +15,30 @@ import java.net.URISyntaxException;
 public class AdministradorController{
     @Autowired
     AdministradorService administradorService;
-    @GetMapping(value = "/{idAdministrador}")
-    @CrossOrigin("*")
-    /*Funcion para obtener a un administrador mediante su id
-      Recibe como parametros idAdministrador
-      Retorna como id a traves del getmapping el administrador
-     */
-    public ResponseEntity<AdministradorEntity> obtenerAdministrador(@PathVariable Long idAdministrador){
-        return ResponseEntity.ok(administradorService.getAdministradorByUser_id(idAdministrador)); //Se obtiene el administrador por id
+    @PostMapping(value = "/administrador/")
+    public ResponseEntity<AdministradorEntity> guardar(@RequestBody AdministradorEntity nuevoAdministrador){
+        AdministradorEntity administrador = administradorService.guardar(nuevoAdministrador);
+        return new ResponseEntity<AdministradorEntity>(administrador, HttpStatus.OK);
     }
-    @GetMapping
-    @CrossOrigin("*")
+    @GetMapping("/administradores/")
+    public Iterable<AdministradorEntity> obtenerTodosAdministradores(){
+        return administradorService.obtenerTodosAdministradores();
+    }
+    @GetMapping("/administrador/{id}")
+    public Optional<AdministradorEntity> obtenerIdAdministrador(@PathVariable Long id){
+        return administradorService.obtenerIdAdministrador(id);
+    }
+    @GetMapping("/eliminarAdmin/")
+    public void eliminarAdministrador(AdministradorEntity administrador){
+        administradorService.eliminarAdministrador(administrador);
+    }
+    @GetMapping("/Actualizar/")
+    public void actualizar(AdministradorEntity administrador){
+        administradorService.actualizar(administrador);
+    }
+    @RequestMapping(value = "/EliminarTicket{id}", method = RequestMethod.GET)
+    public void EliminarTicket(@PathVariable("id") Long id){
+        administradorService.EliminarTicket(id);
+    }
 
-    /*Funcion para guardar un administrador
-      Recibe como parametros administradorEntity y nuevoAdministrador
-      Retorna la informacion guardada de un administrador del sistema
-     */
-    public ResponseEntity<AdministradorEntity> guardar(AdministradorEntity nuevoAdministradorEntity){
-        AdministradorEntity NuevoAdmin = administradorService.guardar(nuevoAdministradorEntity);
-        return new ResponseEntity<>(NuevoAdmin, HttpStatus.OK);
-    }
-
-    @GetMapping
-    @CrossOrigin("*")
-    /*Funcion para actualizar los administradores
-      Recibe como parametros AdministradorEntity X Administrador
-      Retorna la actualizacion de un administrador en el sistema
-     */
-    public ResponseEntity<AdministradorEntity> updateAdministrador(@RequestBody AdministradorEntity administrador){
-        try{
-            AdministradorEntity administrador1 = administradorService.save(administrador);
-            return ResponseEntity.created(new URI("/Administrador"+administrador1.getId())).body(administrador1);
-        }catch (URISyntaxException e){
-            throw new RuntimeException(e);
-        }
-    }
 }

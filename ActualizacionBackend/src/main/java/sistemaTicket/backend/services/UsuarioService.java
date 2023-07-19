@@ -33,4 +33,7 @@ public class UsuarioService {
     public UsuarioEntity getOneRut(String rut){
         return null;
     }
+
+
+
 }

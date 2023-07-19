@@ -1,7 +1,6 @@
 package sistemaTicket.backend.services;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import sistemaTicket.backend.entities.AdministradorEntity;
+import sistemaTicket.backend.entities.TicketEntity;
 import sistemaTicket.backend.repositories.AdministradorRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,27 +8,26 @@ import java.util.Optional;
 
 @Service
 public class AdministradorService{
-    @Autowired
-    AdministradorRepository administradorRepository;
+   AdministradorRepository administradorRepository;
+   public AdministradorEntity guardar(AdministradorEntity administrador){
+       return administradorRepository.save(administrador);
+   }
+   public Iterable<AdministradorEntity> obtenerTodosAdministradores(){
+       return administradorRepository.findAll();
+   }
 
-    public AdministradorEntity guardar(@RequestBody AdministradorEntity nuevoAdministradorEntity){
-        return administradorRepository.save(nuevoAdministradorEntity);
-    }
+   public Optional<AdministradorEntity> obtenerIdAdministrador(Long id){
+       return(administradorRepository.findById(id));
+   }
+   public void eliminarAdministrador(AdministradorEntity administrador){
+       administradorRepository.delete(administrador);
+   }
+   public void actualizar(AdministradorEntity administrador){
+       administradorRepository.save(administrador);
+   }
 
-    public Iterable<AdministradorEntity> todos(){
-        return administradorRepository.findAll();
-    }
+   public void EliminarTicket(Long id){
+      administradorRepository.deleteById(id);
+   }
 
-    public Optional<AdministradorEntity> obtenerAdministrador(Long id){
-        return administradorRepository.findById(id);
-    }
-
-
-    public AdministradorEntity getAdministradorByUser_id(Long id){
-        return administradorRepository.getAdministradorByUser_id(id);
-    }
-
-    public AdministradorEntity save(AdministradorEntity administrador) {
-        return administradorRepository.save(administrador);
-    }
 }
