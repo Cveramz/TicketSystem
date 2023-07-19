@@ -112,7 +112,7 @@ export default {
 }
 
 .title {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Helvética', sans-serif;
   color: black;
   font-size: 30px;
   font-weight: 500;
