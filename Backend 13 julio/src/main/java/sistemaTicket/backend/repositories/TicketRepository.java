@@ -1,8 +1,8 @@
 package sistemaTicket.backend.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import sistemaTicket.backend.entities.TicketEntity;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-public interface TicketRepository extends CrudRepository<TicketEntity, Long> {
+
+public interface TicketRepository extends JpaRepository<TicketEntity, Long> {
 }

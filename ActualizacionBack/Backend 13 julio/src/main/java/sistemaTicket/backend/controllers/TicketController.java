@@ -14,12 +14,12 @@ import java.util.List;
 
 public class TicketController{
     private TicketService ticketService;
-    @PostMapping("/")
-    public void guardarTicket(@RequestBody TicketEntity ticket){
+    @PostMapping("/CrearTicket")
+    public TicketEntity guardarTicket(@RequestBody TicketEntity ticket){
         ticketService.save(ticket);
     }
-    @GetMapping(value = "/MostrarTickets")
-    @CrossOrigin("*")
+    @GetMapping(value = "/MostrarTickets/")
+    //@CrossOrigin("*")
     public List<TicketEntity> MostrarTickets(){
         return ticketService.findAll();
     }

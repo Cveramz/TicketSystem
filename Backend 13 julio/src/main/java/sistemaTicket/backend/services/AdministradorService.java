@@ -4,35 +4,46 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import sistemaTicket.backend.entities.AdministradorEntity;
 import sistemaTicket.backend.entities.TicketEntity;
-import sistemaTicket.backend.repositories.TicketRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import sistemaTicket.backend.repositories.AdministradorRepository;
 import org.springframework.stereotype.Service;
+import sistemaTicket.backend.repositories.TicketRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
-public class TicketService implements TicketRepository{
-    @Autowired
-    TicketRepository ticketRepository;
-    public TicketEntity guardar(TicketEntity nuevoTicket){
-        return ticketRepository.save(nuevoTicket);
-    }
-    public Iterable<TicketEntity> obtenerTodosTicket(){
-        return ticketRepository.findAll();
-    }
-    public Optional<TicketEntity> obtenerIdTicket(Long id){
-        return ticketRepository.findById(id);
-    }
+@RequestMapping(value = "/administrador")
+@RestController
+@CrossOrigin(origins = "http://localhost:5173")
+public class AdministradorService implements TicketRepository {
+   AdministradorRepository administradorRepository;
+   public AdministradorEntity guardar(AdministradorEntity administrador){
+       return administradorRepository.save(administrador);
+   }
+   public Iterable<AdministradorEntity> obtenerTodosAdministradores(){
+       return administradorRepository.findAll();
+   }
 
-    public List<TicketEntity> findByPriority(String prioridad){
-        return ticketRepository.findAll().stream().filter(TicketEntity-> TicketEntity.getPrioridad()
-                        .equals(prioridad))
-                .collect(Collectors.toList());
-    }
+   public Optional<AdministradorEntity> obtenerIdAdministrador(Long id){
+       return(administradorRepository.findById(id));
+   }
+   public void eliminarAdministrador(AdministradorEntity administrador){
+       administradorRepository.delete(administrador);
+   }
+   public void actualizar(AdministradorEntity administrador){
+       administradorRepository.save(administrador);
+   }
+
+   public void EliminarTicket(Long id){
+      administradorRepository.deleteById(id);
+   }
+
 
     @Override
     public void flush() {

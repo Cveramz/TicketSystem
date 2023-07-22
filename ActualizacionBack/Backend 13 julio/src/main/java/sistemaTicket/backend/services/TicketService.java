@@ -23,6 +23,9 @@ public class TicketService implements TicketRepository{
     public void flush() {
 
     }
+    public TicketEntity guardarTicket(TicketEntity ticket){
+        return TicketRepository.save(ticket);
+    }
 
     @Override
     public <S extends TicketEntity> S saveAndFlush(S entity) {
