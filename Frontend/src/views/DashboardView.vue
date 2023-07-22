@@ -11,7 +11,7 @@
       <div class="login__container">
         <div class="login_container">
           <div class="title">
-            <h4 class="register_title">ERROR 404: La página solicitada no se ha podido encontrar.</h4>
+            <h4 class="register_title">Dashboard.</h4>
 
           </div>
           
