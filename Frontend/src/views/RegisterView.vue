@@ -35,42 +35,44 @@ export default {
 
 
 <template>
-  <div class="container" style="background-color: white;">
-    <div class="logo">
-      <img src="../assets/Logos/UsachP2.png" alt="Logo">
-    </div>
-    <div class="login">
-      <div class="login__container">
-        <div class="login_container">
-          <div class="title">
-            <h4 class="register_title">Sistema de Tickets:<br />Creación de cuenta</h4>
+<div class="general">
+    <div class="container" style="background-color: white;">
+      <div class="logo">
+        <img src="../assets/Logos/UsachP2.png" alt="Logo">
+      </div>
+      <div class="login">
+        <div class="login__container">
+          <div class="login_container">
+            <div class="title">
+              <h4 class="register_title">Sistema de Tickets:<br />Creación de cuenta</h4>
+            </div>
+            <form class="register__form" @submit.prevent="submitForm">
+              <v-card class="register__card">
+                <v-card-text>
+                  <v-text-field class="register__input" label="Nombres" v-model="nombres" required></v-text-field>
+
+                  <v-text-field class="register__input" label="Apellidos" v-model="apellidos" required></v-text-field>
+
+                  <v-text-field class="register__input" label="RUT" v-model="rut" required></v-text-field>
+
+                  <v-text-field class="register__input" type="email" label="Correo" v-model="correo" :rules="correoRules"
+                    required></v-text-field>
+
+                  <v-text-field class="register__input" type="password" label="Contraseña" v-model="contrasena"
+                    required></v-text-field>
+
+                  <v-text-field class="register__input" type="password" label="Repetir Contraseña"
+                    v-model="repetirContrasena" :rules="[v => v === contrasena || 'Las contraseñas no coinciden']"
+                    required></v-text-field>
+                </v-card-text>
+
+                <v-card-actions class="register__button">
+                  <v-btn class="register" color="#ffffff" dark rounded @click="submitForm">Registrarse</v-btn>
+                  <router-link class="login__link" to="/">Iniciar sesión</router-link>
+                </v-card-actions>
+              </v-card>
+            </form>
           </div>
-          <form class="register__form" @submit.prevent="submitForm">
-            <v-card class="register__card">
-              <v-card-text>
-                <v-text-field class="register__input" label="Nombres" v-model="nombres" required></v-text-field>
-
-                <v-text-field class="register__input" label="Apellidos" v-model="apellidos" required></v-text-field>
-
-                <v-text-field class="register__input" label="RUT" v-model="rut" required></v-text-field>
-
-                <v-text-field class="register__input" type="email" label="Correo" v-model="correo" :rules="correoRules"
-                  required></v-text-field>
-
-                <v-text-field class="register__input" type="password" label="Contraseña" v-model="contrasena"
-                  required></v-text-field>
-
-                <v-text-field class="register__input" type="password" label="Repetir Contraseña"
-                  v-model="repetirContrasena" :rules="[v => v === contrasena || 'Las contraseñas no coinciden']"
-                  required></v-text-field>
-              </v-card-text>
-
-              <v-card-actions class="register__button">
-                <v-btn class="register" color="#ffffff" dark rounded @click="submitForm">Registrarse</v-btn>
-                <router-link class="login__link" to="/">Iniciar sesión</router-link>
-              </v-card-actions>
-            </v-card>
-          </form>
         </div>
       </div>
     </div>
@@ -78,7 +80,7 @@ export default {
 </template>
 
 <style>
-
+@import '../assets/css/base-prepanel.css';
 
 
 .container {

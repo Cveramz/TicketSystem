@@ -55,42 +55,44 @@ export default {
 
 
 <template>
-  <div class="container" style="background-color: white;">
-    <div class="logo">
-      <img src="../assets/Logos/UsachP2.png" alt="Logo">
-    </div>
-    <div class="login">
-      <div class="login__container">
-        <div class="login">
-          <div class="title">
-            <h4 class="login__title">Bienvenido al Sistema de Tickets</h4>
+  <div class="general">
+    <div class="container" style="background-color: white;">
+      <div class="logo">
+        <img src="../assets/Logos/UsachP2.png" alt="Logo">
+      </div>
+      <div class="login">
+        <div class="login__container">
+          <div class="login">
+            <div class="title">
+              <h4 class="login__title">Bienvenido al Sistema de Tickets</h4>
+            </div>
+            <form class="login__form" @submit.prevent="submitForm">
+              <v-card class="login__card">
+                <v-card-text>
+                  <v-text-field class="login__input" type="email" label="Correo Institucional" v-model="email"
+    :rules="emailrules" required autocomplete="email"></v-text-field>
+
+    <v-text-field class="login__input" type="password" label="Contraseña" v-model="password"
+    :rules="passwordrules" required autocomplete="current-password"></v-text-field>
+                </v-card-text>
+
+                <v-checkbox v-model="recordarUsuario" label="Recordar usuario" color="red" value="red" class="checkbox"></v-checkbox>
+                <v-card-actions class="sesionboton">
+                  <v-btn color="#ffffff" dark rounded @click="submitForm">Iniciar sesión</v-btn>
+                </v-card-actions>
+
+
+                <v-card-actions class="invitadoboton">
+                  <v-btn color="#ffffff" dark rounded>Iniciar como invitado</v-btn>
+                </v-card-actions>
+              </v-card>
+        
+
+
+            </form>
+            <router-link class="login__link" to="/register">Crear cuenta</router-link>
+            <router-link class="login__link" to="/forgot-password">¿Olvidó su contraseña?</router-link>
           </div>
-          <form class="login__form" @submit.prevent="submitForm">
-            <v-card class="login__card">
-              <v-card-text>
-                <v-text-field class="login__input" type="email" label="Correo Institucional" v-model="email"
-  :rules="emailrules" required autocomplete="email"></v-text-field>
-
-  <v-text-field class="login__input" type="password" label="Contraseña" v-model="password"
-  :rules="passwordrules" required autocomplete="current-password"></v-text-field>
-              </v-card-text>
-
-              <v-checkbox v-model="recordarUsuario" label="Recordar usuario" color="red" value="red" class="checkbox"></v-checkbox>
-              <v-card-actions class="sesionboton">
-                <v-btn color="#ffffff" dark rounded @click="submitForm">Iniciar sesión</v-btn>
-              </v-card-actions>
-
-
-              <v-card-actions class="invitadoboton">
-                <v-btn color="#ffffff" dark rounded>Iniciar como invitado</v-btn>
-              </v-card-actions>
-            </v-card>
-      
-
-
-          </form>
-          <router-link class="login__link" to="/register">Crear cuenta</router-link>
-          <router-link class="login__link" to="/forgot-password">¿Olvidó su contraseña?</router-link>
         </div>
       </div>
     </div>
@@ -99,11 +101,9 @@ export default {
 
 <style>
 
+@import '../assets/css/base-prepanel.css';
 
 
-body {
-  background: #00a499;
-}
 
 .container {
   width: 80%;

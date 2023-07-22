@@ -3,18 +3,20 @@
 
 
 <template>
-  <div class="container" style="background-color: white;">
-    <div class="logo">
-      <img src="../assets/Logos/UsachP2.png" alt="Logo">
-    </div>
-    <div class="login">
-      <div class="login__container">
-        <div class="login_container">
-          <div class="title">
-            <h4 class="register_title">ERROR 404: La página solicitada no se ha podido encontrar.</h4>
+  <div class="general">
+    <div class="container" style="background-color: white;">
+      <div class="logo">
+        <img src="../assets/Logos/UsachP2.png" alt="Logo">
+      </div>
+      <div class="login">
+        <div class="login__container">
+          <div class="login_container">
+            <div class="title">
+              <h4 class="register_title">ERROR 404: La página solicitada no se ha podido encontrar.</h4>
 
+            </div>
+            
           </div>
-          
         </div>
       </div>
     </div>
@@ -22,7 +24,7 @@
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+@import '../assets/css/base-prepanel.css';
 
 
 
