@@ -8,7 +8,6 @@ export default {
     return {
       email: '',
       password: '',
-      recordarUsuario: false,
       emailrules: [
         v => !!v || 'El correo es requerido',
         v => /.+@usach\.cl$/.test(v) || 'El correo debe ser @usach.cl',
@@ -24,13 +23,6 @@ export default {
       if (this.validarInformacion()) {
         // Lógica de inicio de sesión aquí
         alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
-        if (this.recordarUsuario) {
-        // Calcular fecha de expiración en 1 día
-        const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 1);
-        // Establecer cookie con el nombre de usuario y fecha de expiración
-        document.cookie = `usuario=${this.email}; expires=${expirationDate.toUTCString()}; path=/`;
-      }
 
         // Mostrar en pantalla lo enviado
         alert('Correo: ' + this.email + '\nContraseña: ' + this.password);
@@ -56,46 +48,74 @@ export default {
 
 <template>
   <div class="general">
+
     <div class="container" style="background-color: white;">
-      <div class="logo">
-        <img src="../assets/Logos/UsachP2.png" alt="Logo">
-      </div>
-      <div class="login">
-        <div class="login__container">
-          <div class="login">
-            <div class="title">
-              <h4 class="login__title">Bienvenido al Sistema de Tickets</h4>
-            </div>
-            <form class="login__form" @submit.prevent="submitForm">
-              <v-card class="login__card">
-                <v-card-text>
-                  <v-text-field class="login__input" type="email" label="Correo Institucional" v-model="email"
-    :rules="emailrules" required autocomplete="email"></v-text-field>
 
-    <v-text-field class="login__input" type="password" label="Contraseña" v-model="password"
-    :rules="passwordrules" required autocomplete="current-password"></v-text-field>
-                </v-card-text>
+      <v-col class="zona-logo"></v-col>
 
-                <v-checkbox v-model="recordarUsuario" label="Recordar usuario" color="red" value="red" class="checkbox"></v-checkbox>
-                <v-card-actions class="sesionboton">
-                  <v-btn color="#ffffff" dark rounded @click="submitForm">Iniciar sesión</v-btn>
-                </v-card-actions>
+      <v-col class="zona-login">
+        <v-card-text class="zona-texto">
+          <h4 class="register_title">Sistema de tickets: Iniciar sesión</h4>
+        </v-card-text>
+
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="email"
+            :rules="emailrules"
+            label="Correo electrónico"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="password"
+            :rules="passwordrules"
+            label="Contraseña"
+            required
+            type="password"
+          ></v-text-field>
+
+          <div class="botones">
+
+          <v-btn
+            :disabled="!valid"
+            color="#EA7600"
+            class="mr-4 text-white"
+            @click="submitForm"
+          >
+            Iniciar sesión
+          </v-btn>
+
+          <v-btn
+            color="#EA3900"
+            class="mr-4 text-white"
+            @click="redirectToPage"
+          >
+            Entrar como invitado
+          </v-btn>
+        </div>
+
+        </v-form>
+
+        <v-card-text class="zona-texto-botones">
+          <router-link to="/register">Registrarse</router-link>
+          <router-link to="/ForgotPasswordView">¿Olvidó su contraseña?</router-link>
+        </v-card-text>
 
 
-                <v-card-actions class="invitadoboton">
-                  <v-btn color="#ffffff" dark rounded>Iniciar como invitado</v-btn>
-                </v-card-actions>
-              </v-card>
+        <v-btn
+            color="#EA7600"
+            class="mr-4 text-white"
+            to="/TicketStatusView"
+          >
+            Consultar estado de ticket
+          </v-btn>
+
         
 
+      </v-col>
 
-            </form>
-            <router-link class="login__link" to="/register">Crear cuenta</router-link>
-            <router-link class="login__link" to="/forgot-password">¿Olvidó su contraseña?</router-link>
-          </div>
-        </div>
-      </div>
     </div>
+
   </div>
 </template>
 
@@ -103,93 +123,39 @@ export default {
 
 @import '../assets/css/base-prepanel.css';
 
-
-
-.container {
-  width: 80%;
-  height: 90vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 20px;
-}
-
-.logo {
-  display: flex;
-  justify-content: flex-start;
+.zona-login{
   width: 50%;
-}
-
-.logo img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  /*que sea del tamaño del padre*/
-  object-fit: cover;
-}
-
-.title {
-  font-family: 'Helvética', sans-serif;
-  color: black;
-  font-size: 30px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.login {
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 100%;
-  flex-direction: column;
-}
-
-.login__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.login__form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 140%;
-  height: 55%;
-  margin-top: 10%;
-
 }
 
-.login__card {
-  max-width: 400px;
+.zona-texto{
   width: 100%;
-}
-
-.sesionboton {
-  background-color: #EA7600;
+  height: 20vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.register_title{
+  font-size: 25px;
+  font-weight: bold;
 }
 
-.invitadoboton {
-  background-color: #EA3800;
+.zona-texto-botones{
+  width: 100%;
+  height: 10vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.botones{
+  width: 100%;
+  height: 10vh;
   display: flex;
   justify-content: center;
-}
-
-.checkbox{
-  height: 12%;
+  align-items: center;
 }
 
 
