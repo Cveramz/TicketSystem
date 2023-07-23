@@ -45,6 +45,12 @@
             :text="'El ticket a buscar no se ha encontrado o no existe'"
           ></v-card>
         </div>
+        <div v-else-if="encontrado === 3">
+          <v-card
+            width="400"
+            :text="'Hubo un error al buscar el ticket. Intente de nuevo más tarde.'"
+          ></v-card>
+        </div>
         <div v-else>
           <v-card
             width="400"
@@ -76,7 +82,7 @@ export default {
     return {
       searchId: "",
       ticket: {},
-      encontrado: 0, // 0 = nulo, 1 = encontrado, 2 = no encontrado
+      encontrado: 0, // 0 = nulo, 1 = encontrado, 2 = no encontrado, 3 = error 
     };
   },
   methods: {
@@ -95,7 +101,7 @@ export default {
         })
         .catch((error) => {
           this.ticket = {};
-          this.encontrado = 2;
+          this.encontrado = 3;
         });
     },
   },

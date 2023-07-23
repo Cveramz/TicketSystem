@@ -4,7 +4,11 @@ class LoginDataService {
 
     // Función para realizar el inicio de sesión
     login(correo, password) {
-    return http.get(`/validar-usuario?correo=${correo}&password=${password}`);
+        try {
+            return http.get(`/validar-usuario?correo=${correo}&password=${password}`);
+        } catch (error) {
+            alert(error);
+        }
     }
     
 
