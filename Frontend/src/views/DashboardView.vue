@@ -55,9 +55,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar app class>
       <!-- Barra horizontal superior -->
-      <v-toolbar-title>Sistema de Tickets</v-toolbar-title>
+      <v-toolbar-title class="barrasup">Sistema de Tickets</v-toolbar-title>
 
       <!-- Barra de búsqueda -->
       <v-text-field
@@ -72,19 +72,20 @@
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-
-      <!-- Icono con la foto de perfil del usuario -->
-      <v-avatar>
-        <img src="ruta_de_la_imagen_del_perfil" alt="Perfil">
-      </v-avatar>
     </v-app-bar>
 
-    <v-main>
-      <v-container>
+
         <!-- Contenido principal -->
         <v-main>
-    </v-main>
-      </v-container>
+          <h1 class="Textomain">Avisos</h1>
+
+<!-- Lista de avisos -->
+<v-card v-for="aviso in avisos" :key="aviso.id" class="avisos">
+  <v-card-title>{{ aviso.titulo }}</v-card-title>
+  <v-card-text>{{ aviso.contenido }}</v-card-text>
+</v-card>
+
+
     </v-main>
   </v-app>
 </template>
@@ -93,9 +94,6 @@
 
 
 export default {
-
-
-
 // Lógica del programa
 
   name: 'App',
@@ -110,21 +108,49 @@ export default {
       this.selectedItem = item;
     },
   },
-
+//Sección Inicio
+  data() {
+    return {
+      avisos: [
+        {
+          id: 1,
+          titulo: '¡Bienvenido al sistema de tickets!',
+          contenido: 'Puedes configurar los datos de tu cuenta en la sección "Mi Cuenta"',
+        },
+        {
+          id: 2,
+          titulo: 'Aviso 2',
+          contenido: 'Contenido del aviso 2',
+        },
+      ],
+    };
+  }, 
 };
 
 </script>
 
 <style>
 /* CSS */
+.barrasup{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Textomain{
 
-  .drawerizq{
-    height: 100vh;
-    width: 100vw;
-    background-color: #00a499;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.drawerizq{
+  height: 100vh;
+  width: 100vw;
+  background-color: #00a499;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   }
 
 </style>
