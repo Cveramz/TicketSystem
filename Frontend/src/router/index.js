@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/LoginView.vue';
 
 const routes = [
-  ,
+  
   {
     path: '/:catchAll(.*)',
     component: () => import('../views/NotFoundView.vue')
@@ -22,7 +22,33 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
-  }
+  },
+
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('../views/DashboardView.vue')
+  },
+  {
+    path: '/mistickets',
+    name: 'mistickets',
+    component: () => import('../views/MyTicketsView.vue')
+  },
+  {
+    path: '/crearticket',
+    name: 'crearticket',
+    component: () => import('../views/CreateTicketView.vue')
+  },
+  {
+    path: '/micuenta',
+    name: 'micuenta',
+    component: () => import('../views/MyAccountView.vue')
+  },
+  {
+    path: '/ticketstatus',
+    name: 'ticketstatus',
+    component: () => import('../views/TicketStatusView.vue')
+  },
 ];
 
 const router = createRouter({

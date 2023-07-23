@@ -84,16 +84,36 @@
     </v-app-bar>
 
 
-        <!-- Contenido principal -->
-        <v-main>
-          <h1 class="Textomain">Avisos</h1>
+    <!-- Contenido principal -->
+    <v-main>
+        <h2>Mis Tickets</h2>
 
-<!-- Lista de avisos -->
-<v-card v-for="aviso in avisos" :key="aviso.id" class="avisos">
-  <v-card-title>{{ aviso.titulo }}</v-card-title>
-  <v-card-text>{{ aviso.contenido }}</v-card-text>
+<!-- Lista de tickets -->
+<v-list>
+  <v-list-item-group v-model="selectedTicketId">
+    <v-list-item
+      v-for="ticket in tickets"
+      :key="ticket.id"
+      @click="selectTicket(ticket.id)"
+    >
+      <v-list-item-content>
+        <v-list-item-title>{{ ticket.asunto }}</v-list-item-title>
+        <v-list-item-subtitle>{{ ticket.fecha }}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list-item-group>
+</v-list>
+
+<!-- Detalle del ticket seleccionado -->
+<v-card v-if="selectedTicketId !== null">
+  <v-card-title>{{ selectedTicket.asunto }}</v-card-title>
+  <v-card-text>{{ selectedTicket.detalle }}</v-card-text>
+  <!-- Botón para cerrar el detalle del ticket -->
+  <v-btn @click="closeTicketDetails"
+  color="#EA7600"
+  class="mr-4 text-white"
+  >Cerrar Detalle</v-btn>
 </v-card>
-
 
     </v-main>
   </v-app>
@@ -117,23 +137,41 @@ export default {
       this.selectedItem = item;
     },
   },
-//Sección Inicio
-  data() {
+//Sección Mis Tickets
+
+data() {
     return {
-      avisos: [
+      tickets: [
         {
           id: 1,
-          titulo: '¡Bienvenido al sistema de tickets!',
-          contenido: 'Puedes configurar los datos de tu cuenta en la sección "Mi Cuenta"',
+          asunto: 'Problema Ramo Fingeso',
+          detalle: 'Falté a la pep 1 de Fingeso y quiero dar la prueba recuperativa pero no tengo certificado médico',
+          fecha: '2023-07-20',
         },
         {
           id: 2,
-          titulo: 'Aviso 2',
-          contenido: 'Contenido del aviso 2',
+          asunto: 'Gotera CEII',
+          detalle: 'Hola, dentro de la oficina del CEII hay una gotera que moja toda la mesa',
+          fecha: '2023-07-21',
         },
+        // Agrega más tickets simulados aquí
       ],
+      selectedTicketId: null,
     };
-  }, 
+  },
+  computed: {
+    selectedTicket() {
+      return this.tickets.find((ticket) => ticket.id === this.selectedTicketId);
+    },
+  },
+  methods: {
+    selectTicket(ticketId) {
+      this.selectedTicketId = ticketId;
+    },
+    closeTicketDetails() {
+      this.selectedTicketId = null;
+    },
+  },
 };
 
 </script>

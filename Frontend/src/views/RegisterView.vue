@@ -16,142 +16,151 @@ export default {
         v => !!v || 'El correo es requerido',
         v => /(.+)@(.+){2,}\.(.+){2,}/.test(v) || 'El correo no es válido',
         v => /@usach\.cl$/.test(v) || 'El correo debe ser de @usach.cl'
-      ]
+      ],
+      nameRules: [v => !!v || 'El nombre es requerido'],
+      passwordRules: [
+        v => !!v || 'La contraseña es requerida',
+        v => (v && v.length >= 8) || 'La contraseña debe tener al menos 8 caracteres'
+      ],
+      repetirContrasenaRules: [
+        v => !!v || 'La contraseña es requerida',
+        v => (v && v.length >= 8) || 'La contraseña debe tener al menos 8 caracteres',
+        v => v === this.contrasena || 'Las contraseñas no coinciden'
+      ],
+      rutRules: [v => !!v || 'El RUT es requerido', v => this.validarRut(v) || 'RUT inválido'],
+      valid: false // Inicializamos el estado de validación del formulario como falso
     };
   },
   methods: {
-
-
-    submitForm() {
-        // Lógica de inicio de sesión aquí
-        alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
-        //mostrar en pantalla lo enviado
-        alert('Correo: ' + this.email + '\nContraseña: ' + this.password);
-        this.$router.push('/login');  // Redirigir a la vista de inicio
+    validarRut(rut) {
+      // Aquí implementamos la lógica para validar el formato del RUT chileno
+      if (!rut || typeof rut !== 'string') return false;
+      const regex = /^(\d{1,3}(?:\.\d{1,3}){2})-(\d|k|K)$/;
+      return regex.test(rut.trim());
     },
+    submitForm() {
+  console.log('Enviando formulario...');
+  console.log('Estado de validación antes de validar:', this.valid);
+  this.$refs.form.validate(valid => {
+    console.log('Estado de validación después de validar:', valid);
+  });
+
+  alert('Formulario enviado y correo válido. Procesando registro...');
+  alert('Contenido a enviar:');
+  alert('Nombres: ' + this.nombres + '\nApellidos: ' + this.apellidos + '\nRUT: ' + this.rut + '\nCorreo: ' + this.correo + '\nContraseña: ' + this.contrasena + '\nRepetir contraseña: ' + this.repetirContrasena);
+},
+    // ... ( función enviarFormulario actual) ...
   }
 };
+
+
+
 </script>
 
 
 <template>
-  <div class="container" style="background-color: white;">
-    <div class="logo">
-      <img src="../assets/Logos/UsachP2.png" alt="Logo">
-    </div>
-    <div class="login">
-      <div class="login__container">
-        <div class="login_container">
-          <div class="title">
-            <h4 class="register_title">Sistema de Tickets:<br />Creación de cuenta</h4>
+  <div class="general">
+    <div class="container" style="background-color: white;">
+      <v-col class="zona-logo"></v-col>
+      <v-col class="zona-registro">
+        <v-card-text class="zona-texto">
+          <h4 class="register_title">Sistema de tickets: Registro</h4>
+        </v-card-text>
+
+        <v-card class="formulario-registro">
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="nombres"
+                  :rules="nameRules"
+                  label="Nombres"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="apellidos"
+                  :rules="nameRules"
+                  label="Apellidos"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="rut"
+                  :rules="rutRules"
+                  label="RUT"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="correo"
+                  :rules="correoRules"
+                  label="Correo"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="contrasena"
+                  :rules="passwordRules"
+                  label="Contraseña"
+                  required
+                  type="password"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="repetirContrasena"
+                  :rules="repetirContrasenaRules"
+                  label="Repetir contraseña"
+                  required
+                  type="password"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <div class="botones-registro">
+              <v-btn class="btn text-white" :disabled="!valid" color="#EA7600" @click="submitForm">
+                Registrarse
+              </v-btn>
+              <v-btn
+              color="#394049"
+              class="btn text-white"
+              to="/login"
+            >
+              Iniciar Sesión
+            </v-btn>
           </div>
-          <form class="register__form" @submit.prevent="submitForm">
-            <v-card class="register__card">
-              <v-card-text>
-                <v-text-field class="register__input" label="Nombres" v-model="nombres" required></v-text-field>
-
-                <v-text-field class="register__input" label="Apellidos" v-model="apellidos" required></v-text-field>
-
-                <v-text-field class="register__input" label="RUT" v-model="rut" required></v-text-field>
-
-                <v-text-field class="register__input" type="email" label="Correo" v-model="correo" :rules="correoRules"
-                  required></v-text-field>
-
-                <v-text-field class="register__input" type="password" label="Contraseña" v-model="contrasena"
-                  required></v-text-field>
-
-                <v-text-field class="register__input" type="password" label="Repetir Contraseña"
-                  v-model="repetirContrasena" :rules="[v => v === contrasena || 'Las contraseñas no coinciden']"
-                  required></v-text-field>
-              </v-card-text>
-
-              <v-card-actions class="register__button">
-                <v-btn class="register" color="#ffffff" dark rounded @click="submitForm">Registrarse</v-btn>
-                <router-link class="login__link" to="/">Iniciar sesión</router-link>
-              </v-card-actions>
-            </v-card>
-          </form>
-        </div>
-      </div>
+          </v-form>
+        </v-card>
+      </v-col>
     </div>
   </div>
 </template>
 
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+@import '../assets/css/base-prepanel.css';
 
 
-
-.container {
-  width: 80%;
-  height: 90vh;
+.botones-registro{
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 20px;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
-.logo {
-  display: flex;
-  justify-content: flex-start;
-  width: 50%;
-}
-
-.logo img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.botones-registro .btn{
   width: 100%;
-  height: 100%;
-  /*que sea del tamaño del padre*/
-  object-fit: cover;
-}
-
-.title {
-  font-family: 'Helvética', sans-serif;
-  color: black;
-  font-size: 30px;
-  font-weight: 500;
-  justify-content: center;
-}
-
-
-.login_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-}
-
-
-.register__form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 90%;
-  height: 90%;
-}
-
-.register__input{
-  margin-bottom: 15px;
-  height: 50px;
-}
-
-
-.register__button{
-  display: flex;
-  flex-direction: column;
-}
-
-.register{
-  background-color: #EA7600;
-  width: 80%;
+  margin-bottom: 10px;
 }
 
 </style>

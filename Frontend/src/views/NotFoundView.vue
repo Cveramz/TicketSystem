@@ -1,68 +1,51 @@
 <script>
+export default {
+  mounted() {
+    // Utilizamos setTimeout para redireccionar después de 5 segundos
+    setTimeout(() => {
+      this.redirectToHome();
+    }, 10000);
+  },
+  methods: {
+    redirectToHome() {
+      // Redireccionar a la página de inicio (ruta /)
+      this.$router.push('/');
+    },
+  },
+};
 </script>
 
 
 <template>
-  <div class="container" style="background-color: white;">
-    <div class="logo">
-      <img src="../assets/Logos/UsachP2.png" alt="Logo">
-    </div>
-    <div class="login">
-      <div class="login__container">
-        <div class="login_container">
-          <div class="title">
-            <h4 class="register_title">ERROR 404: La página solicitada no se ha podido encontrar.</h4>
+  <div class="general">
 
-          </div>
-          
-        </div>
-      </div>
+    <div class="container" style="background-color: white;">
+
+      <v-col class="zona-logo">
+
+      </v-col>
+
+      <v-card-text class="zona-texto-not-found">
+        <h4 class="register_title">ERROR 404: La página solicitada no se ha podido encontrar.
+          Serás redireccionado a la página inicial.
+        </h4>
+      </v-card-text>
+
     </div>
+
   </div>
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap');
+@import '../assets/css/base-prepanel.css';
 
-
-
-.container {
-  width: 80%;
-  height: 85vh;
+.zona-texto-not-found{
+  width: 10%;
+  font-size: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 20px;
-}
-
-.logo {
-  display: flex;
-  justify-content: flex-start;
-  width: 50%;
-}
-
-.logo img {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  /*que sea del tamaño del padre*/
-  object-fit: cover;
 }
-
-.title {
-  font-family: 'Nunito', sans-serif;
-  color: black;
-  font-size: 40px;
-  font-weight: 500;
-  justify-content: center;
-  margin: 20;
-}
-
 
 </style>
