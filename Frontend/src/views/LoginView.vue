@@ -7,6 +7,7 @@ export default {
   name: 'LoginView',
   data() {
     return {
+      valid: false,
       email: '',
       password: '',
       emailrules: [
