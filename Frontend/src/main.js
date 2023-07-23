@@ -13,7 +13,7 @@ import '@mdi/font/css/materialdesignicons.css';
 
 const vuetify = createVuetify({
   components,
-  directives,
+  directives
 })
 
 const app = createApp(App)
