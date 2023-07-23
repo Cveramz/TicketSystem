@@ -1,5 +1,4 @@
 package sistemaTicket.backend.controllers;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import sistemaTicket.backend.entities.UsuarioEntity;
@@ -9,12 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173") // para realizar las peticiones
-
 @RestController
 public class UsuarioController{
     @Autowired
@@ -25,7 +21,6 @@ public class UsuarioController{
         UsuarioEntity objeto = usuarioService.guardar(usuarioEntityNuevo);
         return new ResponseEntity<UsuarioEntity>(objeto, HttpStatus.OK);
     }
-
     @GetMapping("/usuarios/")
     public Iterable<UsuarioEntity> todos() {
         return usuarioService.todos();
@@ -36,5 +31,16 @@ public class UsuarioController{
         return usuarioService.obtenerUsuario(id);
     }
 
+    //GET: http://localhost:8080/validar-usuario?correo=cr7,a@usach.cl&password=rm2018
+    @GetMapping("/validar-usuario")
+    @CrossOrigin("*")
+    public ResponseEntity<UsuarioEntity> SystemLogin(@RequestParam String correo, @RequestParam String password){
+        UsuarioEntity newUser = usuarioService.SystemLogin(correo, password);
+        if(newUser == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
 }
 

@@ -1,17 +1,15 @@
 package sistemaTicket.backend.controllers;
 
+import org.springframework.stereotype.Controller;
 import sistemaTicket.backend.entities.TicketEntity;
 import sistemaTicket.backend.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 @RestController
+@Controller
 public class TicketController{
     @Autowired
     TicketService ticketService;
@@ -36,25 +34,28 @@ public class TicketController{
 
     @GetMapping(value = "/prioridad/{prioridad}")
     @CrossOrigin("*")
-
-    public ResponseEntity<List<TicketEntity>> findByPriority(@PathVariable("prioridad") String prioridad){
-        return ResponseEntity.ok(ticketService.findByPriority(prioridad));
+    public ResponseEntity<TicketEntity> obtenerTicketPorPrioridad(@PathVariable String prioridad){
+        return ResponseEntity.ok(ticketService.obtenerTicketPorPrioridad(prioridad));
     }
-
-    @PostMapping("/")
-    public void guardarTicket(@RequestBody TicketEntity ticket){
-        ticketService.save(ticket);
-    }
-
-
-    @PutMapping
+    @PutMapping("/tickets/{id}")
     @CrossOrigin("*")
-    public ResponseEntity<TicketEntity> actualizarTickets(@PathVariable TicketEntity ticket1){
+    public ResponseEntity<TicketEntity> ActualizarTicket(@PathVariable Long id, @RequestBody TicketEntity ticket){
+        TicketEntity ticketVigente = ticketService.obtenerTicketPorId(id);
+        if(ticketVigente == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ticketVigente.setEstadoTicket(ticket.getEstadoTicket());
+        TicketEntity ticketModificado = ticketService.actualizarTicket(ticketVigente);
+        return new ResponseEntity<>(ticketModificado, HttpStatus.OK);
+    }
+    @DeleteMapping("/Delete/{idTicket}")
+    public ResponseEntity<TicketEntity> eliminarTicket(@RequestBody Long idTicket){
         try{
-            TicketEntity ticket2 = ticketService.save(ticket1);
-            return ResponseEntity.created(new URI("/ticket"+ticket1.getIdTicket())).body(ticket2);
-        }catch (URISyntaxException e){
-            throw new RuntimeException(e);
+            ticketService.eliminarTicket(idTicket);
+            System.out.println("El ticket a sido eliminado con exito!");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
