@@ -6,7 +6,9 @@
         <!-- Logo del sistema ticket -->
         <v-list-item>
           <v-list-item-icon>
-            <v-icon>mdi-ticket</v-icon>
+            <v-avatar size="64">
+              <img src="favicon.png" alt="Logo" style="max-width: 100%; max-height: 100%;"/>
+        </v-avatar>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Ticket System USACH</v-list-item-title>

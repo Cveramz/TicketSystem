@@ -5,13 +5,15 @@
         <v-list>
           <!-- Logo del sistema ticket -->
           <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-ticket</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Ticket System USACH</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <v-list-item-icon>
+            <v-avatar size="64">
+              <img src="favicon.png" alt="Logo" style="max-width: 100%; max-height: 100%;"/>
+        </v-avatar>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Ticket System USACH</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
   
           <!-- Opciones del menú -->
           <v-list-item-group v-model="selectedItem">
@@ -108,7 +110,10 @@
 ></v-text-field>
 
 <!-- Botón para actualizar datos de la cuenta -->
-<v-btn @click="actualizarCuenta" color="primary">Actualizar Cuenta</v-btn>
+<v-btn @click="actualizarCuenta" 
+color="#EA7600"
+class="mr-4 text-white"
+>Actualizar Cuenta</v-btn>
   
       </v-main>
     </v-app>
