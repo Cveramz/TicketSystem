@@ -40,10 +40,16 @@
           ></v-card>
         </div>
         <div v-else-if="encontrado === 2">
-          <p>El ticket no fue encontrado o no existe.</p>
+          <v-card
+            width="400"
+            :text="'El ticket a buscar no se ha encontrado o no existe'"
+          ></v-card>
         </div>
         <div v-else>
-          <p>Ingrese el ID del ticket para buscarlo.</p>
+          <v-card
+            width="400"
+            :text="'Ingrese el ID del ticket para buscarlo.'"
+          ></v-card>
       </div>
       <br>
       <v-divider class="border-opacity-40"></v-divider>
@@ -77,10 +83,18 @@ export default {
     getTicketById() {
       GetTicketService.getTicketById(this.searchId)
         .then((response) => {
-          this.ticket = response.data;
-          this.encontrado = 1;
+          // Verificar si el ticket existe en la respuesta
+          if (response.data) {
+            this.ticket = response.data;
+            this.encontrado = 1;
+          } else {
+            // Ticket no encontrado
+            this.ticket = {};
+            this.encontrado = 2;
+          }
         })
         .catch((error) => {
+          this.ticket = {};
           this.encontrado = 2;
         });
     },
