@@ -1,8 +1,15 @@
 <template>
     <v-app>
       <v-navigation-drawer app v-model="drawer" temporary>
-        <h3>Menú vertical</h3>
+        <v-layout column align-center>
+          <v-col align="center">
+            <img src="../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
+            <v-divider></v-divider>
+            <p class="headline">Bienvenido al sistema de tickets</p>
+          </v-col>
+        </v-layout>
       </v-navigation-drawer>
+
   
       <v-app-bar app color="#EA7600" class="text-white">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
