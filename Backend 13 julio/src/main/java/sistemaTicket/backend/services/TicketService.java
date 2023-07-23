@@ -1,9 +1,11 @@
 package sistemaTicket.backend.services;
+import jakarta.transaction.Transactional;
 import sistemaTicket.backend.entities.TicketEntity;
 import sistemaTicket.backend.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+
 
 
 @Service
@@ -30,7 +32,8 @@ public class TicketService{
         return ticketRepository.save(ticket);
     }
 
-    public void eliminarTicket(Long idTicket){
-        ticketRepository.deleteById(idTicket);
+    public void eliminarTicket(Long id){
+        System.out.println("Eliminacion de ticket");
+        ticketRepository.deleteByIdTicket(id);
     }
 }

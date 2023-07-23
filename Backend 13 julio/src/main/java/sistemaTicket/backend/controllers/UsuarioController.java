@@ -1,4 +1,6 @@
 package sistemaTicket.backend.controllers;
+import jakarta.transaction.Transactional;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import sistemaTicket.backend.entities.UsuarioEntity;
