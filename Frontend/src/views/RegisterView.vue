@@ -6,11 +6,15 @@ export default {
   name: 'RegisterView',
   data() {
     return {
-      nombres: '',
-      apellidos: '',
-      rut: '',
-      correo: '',
-      contrasena: '',
+      nuevoUsuario: {
+        idUsuario: 0,
+        nombre: '',
+        apellido: '',
+        rut: '',
+        correo: '',
+        password: '',
+
+      },
       repetirContrasena: '',
       correoRules: [
         v => !!v || 'El correo es requerido',
@@ -25,7 +29,7 @@ export default {
       repetirContrasenaRules: [
         v => !!v || 'La contraseña es requerida',
         v => (v && v.length >= 8) || 'La contraseña debe tener al menos 8 caracteres',
-        v => v === this.contrasena || 'Las contraseñas no coinciden'
+        v => v === this.nuevoUsuario.password || 'Las contraseñas no coinciden'
       ],
       rutRules: [v => !!v || 'El RUT es requerido', v => this.validarRut(v) || 'RUT inválido'],
       valid: false // Inicializamos el estado de validación del formulario como falso
@@ -38,17 +42,27 @@ export default {
       const regex = /^(\d{1,3}(?:\.\d{1,3}){2})-(\d|k|K)$/;
       return regex.test(rut.trim());
     },
-    submitForm() {
-  console.log('Enviando formulario...');
-  console.log('Estado de validación antes de validar:', this.valid);
-  this.$refs.form.validate(valid => {
-    console.log('Estado de validación después de validar:', valid);
-  });
+    async submitForm() {
+        // Realizar la solicitud al backend para registrar el nuevo usuario
+        try {
+          const response = await RegisterDataService.register(this.nuevoUsuario);
 
-  alert('Formulario enviado y correo válido. Procesando registro...');
-  alert('Contenido a enviar:');
-  alert('Nombres: ' + this.nombres + '\nApellidos: ' + this.apellidos + '\nRUT: ' + this.rut + '\nCorreo: ' + this.correo + '\nContraseña: ' + this.contrasena + '\nRepetir contraseña: ' + this.repetirContrasena);
-},
+          // La respuesta contiene los datos del nuevo usuario registrado
+          // Aquí puedes realizar acciones adicionales, si es necesario
+
+          alert('El usuario ha sido registrado exitosamente.');
+
+          // Redirigir a la página deseada después de registrar el usuario
+          this.redirectToPage();
+        } catch (error) {
+          // Error en la solicitud, mostrar mensaje de error
+          alert('Hubo un error al intentar registrar el usuario. Intente nuevamente más tarde.');
+        }
+    },
+    redirectToPage() {
+      // Redireccionar a la página deseada
+      this.$router.push('/login');
+    }
     // ... ( función enviarFormulario actual) ...
   }
 };
@@ -72,17 +86,17 @@ export default {
             <v-row>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="nombres"
+                  v-model="nuevoUsuario.nombre"
                   :rules="nameRules"
-                  label="Nombres"
+                  label="Nombre"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="apellidos"
+                  v-model="nuevoUsuario.apellido"
                   :rules="nameRules"
-                  label="Apellidos"
+                  label="Apellido"
                   required
                 ></v-text-field>
               </v-col>
@@ -91,7 +105,7 @@ export default {
             <v-row>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="rut"
+                  v-model="nuevoUsuario.rut"
                   :rules="rutRules"
                   label="RUT"
                   required
@@ -99,7 +113,7 @@ export default {
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="correo"
+                  v-model="nuevoUsuario.correo"
                   :rules="correoRules"
                   label="Correo"
                   required
@@ -110,7 +124,7 @@ export default {
             <v-row>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="contrasena"
+                  v-model="nuevoUsuario.password"
                   :rules="passwordRules"
                   label="Contraseña"
                   required

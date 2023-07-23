@@ -20,15 +20,28 @@ export default {
     };
   },
   methods: {
-
-    submitForm() {
+    async submitForm() {
       if (this.validarInformacion()) {
-        // Lógica de inicio de sesión aquí
-        alert('Formulario enviado y correo válido. Procesando inicio de sesión...');
+        // Realizar la solicitud al backend para iniciar sesión
+        try {
+          const response = await LoginService.login(this.email, this.password);
 
-        // Mostrar en pantalla lo enviado
-        alert('Correo: ' + this.email + '\nContraseña: ' + this.password);
-        this.redirectToPage(); // Redirigir a la vista de inicio
+          if (response.status === 200) {
+            // Inicio de sesión exitoso, redirigir a la página deseada
+            alert('Inicio de sesión exitoso')
+            this.redirectToPage();
+          } else {
+            // Inicio de sesión fallido, mostrar mensaje de error
+            alert('Credenciales inválidas. Revise el correo y la contraseña.');
+          }
+        } catch (error) {
+          // Si es 404 es porque no se encontró el recurso
+          if (error.response.status === 401) {
+            alert('Credenciales inválidas. Revise el correo y la contraseña.');
+          } else {
+            alert('Error al iniciar sesión. Intente nuevamente más tarde.');
+          }
+        }
       }
     },
     validarInformacion() {
@@ -41,7 +54,7 @@ export default {
     },
     redirectToPage() {
       // Redireccionar a la página deseada
-      this.$router.push('/register');
+      this.$router.push('/dashboard');
     }
   }
 };

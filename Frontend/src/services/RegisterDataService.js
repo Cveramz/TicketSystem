@@ -1,9 +1,10 @@
 import http from "../../http-common.js";
 
 class RegisterDataService {
-
-    //funciones para el registro
+  // Función para registrar un nuevo usuario
+  register(newUser) {
+    return http.post('/usuario/', newUser);
+  }
 }
-
 
 export default new RegisterDataService();
