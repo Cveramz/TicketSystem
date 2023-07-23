@@ -44,6 +44,11 @@ const routes = [
     name: 'micuenta',
     component: () => import('../views/MyAccountView.vue')
   },
+  {
+    path: '/ticketstatus',
+    name: 'ticketstatus',
+    component: () => import('../views/TicketStatusView.vue')
+  },
 ];
 
 const router = createRouter({

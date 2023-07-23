@@ -1,3 +1,4 @@
+
 <script>
 
 import LoginService from "../services/LoginDataService.js";
@@ -105,7 +106,7 @@ export default {
         <v-btn
             color="#EA7600"
             class="mr-4 text-white"
-            to="/TicketStatusView"
+            to="/TicketStatus"
           >
             Consultar estado de ticket
           </v-btn>
