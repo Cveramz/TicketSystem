@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/LoginView.vue';
 
 const routes = [
-  ,
+  
   {
     path: '/:catchAll(.*)',
     component: () => import('../views/NotFoundView.vue')
@@ -22,7 +22,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
-  }
+  },
+
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('../views/DashboardView.vue')
+  },
 ];
 
 const router = createRouter({
