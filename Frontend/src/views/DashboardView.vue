@@ -15,42 +15,49 @@
 
         <!-- Opciones del menú -->
         <v-list-item-group v-model="selectedItem">
-          <v-list-item @click="navigateTo('Inicio')">
-    <v-list-item-icon>
-      <v-icon>mdi-ticket</v-icon>
-    </v-list-item-icon>
-    <v-list-item-content>
-      <v-list-item-title>Inicio</v-list-item-title>
-    </v-list-item-content>
+          <router-link to="/dashboard">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Inicio</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
 
-</v-list-item>
+      <router-link to="/mistickets">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-ticket-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Mis Tickets</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
 
-          <v-list-item @click="navigateTo('MisTickets')">
-            <v-list-item-icon>
-              <v-icon>mdi-ticket-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Mis tickets</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+      <router-link to="/crearticket">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-new-box</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Crear Ticket</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
 
-          <v-list-item @click="changeSection('crear-ticket')">
-            <v-list-item-icon>
-              <v-icon>mdi-new-box</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Crear ticket</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item @click="navigateTo('MiCuenta')">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Mi cuenta</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+      <router-link to="/micuenta">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Mi Cuenta</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
