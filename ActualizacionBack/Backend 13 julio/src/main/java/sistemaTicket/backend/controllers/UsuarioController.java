@@ -33,13 +33,14 @@ public class UsuarioController{
         return usuarioService.obtenerUsuario(id);
     }
 
-    //GET: http://localhost:8080/validar-usuario?correo=cr7,a@usach.cl&password=rm2018
-    @GetMapping("/validar-usuario")
+    @PostMapping("/Login")
     @CrossOrigin("*")
-    public ResponseEntity<UsuarioEntity> SystemLogin(@RequestParam String correo, @RequestParam String password){
-        UsuarioEntity newUser = usuarioService.SystemLogin(correo, password);
+    public ResponseEntity<UsuarioEntity> SystemLogin(@RequestBody UsuarioEntity User){
+        String correoUser = User.getCorreo();
+        String passwordUser = User.getPassword();
+        UsuarioEntity newUser = usuarioService.SystemLogin(correoUser, passwordUser);
         if(newUser == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }else{
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -63,6 +64,16 @@ public class UsuarioController{
         }catch (Exception e){
             return new ResponseEntity<>("Fallo al eliminar el usuario del sistema", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PutMapping("/Actualizar-Usuario/{password}/{rut}")
+    @CrossOrigin("*")
+    public ResponseEntity<String> changePassword(@PathVariable String newPassword, @PathVariable String rut){
+        UsuarioEntity usuario = usuarioService.obtenerUserByRut(rut);
+        if(usuario == null){
+            return new ResponseEntity<>("No existe el usuario", HttpStatus.NOT_FOUND);
+        }
+        usuarioService.changePassword(newPassword, rut);
+        return new ResponseEntity<>("Contraseña actualizada", HttpStatus.ACCEPTED);
     }
 }
 
