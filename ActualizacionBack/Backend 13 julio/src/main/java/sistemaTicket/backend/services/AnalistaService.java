@@ -16,6 +16,7 @@ public class AnalistaService{
     public AnalistaEntity buscarTicketById(Long id){
         return analistaRepository.findByIdAnalista(id);
     }
+    /*
     public void AsignarAnalista(Long idAnalista, Long idTicket){
         AnalistaEntity analista = analistaRepository.findByIdAnalista(idAnalista);
         TicketEntity ticket = ticketRepository.findByIdTicket(idTicket);
@@ -25,4 +26,5 @@ public class AnalistaService{
     public AnalistaEntity guardar(AnalistaEntity analista){
         return analistaRepository.save(analista);
     }
+    */
 }

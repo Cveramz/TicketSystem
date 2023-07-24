@@ -1,43 +1,83 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package sistemaTicket.backend.entities;
 
-import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
-@Table(name = "reclamo")
-
-public class TicketEntity{
+@Table(
+        name = "reclamo"
+)
+public class TicketEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTicket")
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    @Column(
+            name = "idTicket"
+    )
     private Long idTicket;
-    @Column(name = "categoria")
+    @Column(
+            name = "categoria"
+    )
     private String categoria;
-    @Column(name = "descripcion")
+    @Column(
+            name = "descripcion"
+    )
     private String descripcion;
-    @Column(name = "consulta")
+    @Column(
+            name = "consulta"
+    )
     private String consulta;
-    @Column(name = "comentarios")
+    @Column(
+            name = "comentarios"
+    )
     private String comentarios;
-    @Column(name = "estadoTicket")
+    @Column(
+            name = "estadoTicket"
+    )
     private String estadoTicket;
-    @Column(name = "ticketRut")
+    @Column(
+            name = "ticketRut"
+    )
     private String ticketRut;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(
+            iso = ISO.DATE_TIME
+    )
     private Date fechaCreacion;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(
+            iso = ISO.DATE_TIME
+    )
     private Date ultimaActualizacion;
-    @Column(name = "resolucion")
+    @Column(
+            name = "resolucion"
+    )
     private String resolucion;
-    @Column(name = "Prioridad")
+
+    @Column(
+            name = "Prioridad"
+    )
     private String prioridad;
+    /*
     @ManyToOne
-    @JoinColumn(name = "idAnalista")
+    @JoinColumn(
+            name = "idAnalista"
+    )
     private AnalistaEntity analista;
-
-
+    */
 
     public TicketEntity(Long idTicket, String categoria, String descripcion, String consulta, String comentarios, String estadoTicket, Date fechaCreacion, Date ultimaActualizacion, String resolucion, String prioridad, AnalistaEntity analista, String ticketRut) {
         this.idTicket = idTicket;
@@ -50,16 +90,15 @@ public class TicketEntity{
         this.ultimaActualizacion = ultimaActualizacion;
         this.resolucion = resolucion;
         this.prioridad = prioridad;
-        this.analista = analista;
+        //this.analista = analista;
         this.ticketRut = ticketRut;
     }
 
     public TicketEntity() {
-
     }
 
     public Long getIdTicket() {
-        return idTicket;
+        return this.idTicket;
     }
 
     public void setIdTicket(Long idTicket) {
@@ -67,7 +106,7 @@ public class TicketEntity{
     }
 
     public String getCategoria() {
-        return categoria;
+        return this.categoria;
     }
 
     public void setCategoria(String categoria) {
@@ -75,7 +114,7 @@ public class TicketEntity{
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return this.descripcion;
     }
 
     public void setDescripcion(String descripcion) {
@@ -83,7 +122,7 @@ public class TicketEntity{
     }
 
     public String getConsulta() {
-        return consulta;
+        return this.consulta;
     }
 
     public void setConsulta(String consulta) {
@@ -91,7 +130,7 @@ public class TicketEntity{
     }
 
     public String getComentarios() {
-        return comentarios;
+        return this.comentarios;
     }
 
     public void setComentarios(String comentarios) {
@@ -99,7 +138,7 @@ public class TicketEntity{
     }
 
     public String getEstadoTicket() {
-        return estadoTicket;
+        return this.estadoTicket;
     }
 
     public void setEstadoTicket(String estadoTicket) {
@@ -107,7 +146,7 @@ public class TicketEntity{
     }
 
     public Date getFechaCreacion() {
-        return fechaCreacion;
+        return this.fechaCreacion;
     }
 
     public void setFechaCreacion(Date fechaCreacion) {
@@ -115,7 +154,7 @@ public class TicketEntity{
     }
 
     public Date getUltimaActualizacion() {
-        return ultimaActualizacion;
+        return this.ultimaActualizacion;
     }
 
     public void setUltimaActualizacion(Date ultimaActualizacion) {
@@ -123,7 +162,7 @@ public class TicketEntity{
     }
 
     public String getResolucion() {
-        return resolucion;
+        return this.resolucion;
     }
 
     public void setResolucion(String resolucion) {
@@ -131,27 +170,27 @@ public class TicketEntity{
     }
 
     public String getPrioridad() {
-        return prioridad;
+        return this.prioridad;
     }
 
     public void setPrioridad(String prioridad) {
         this.prioridad = prioridad;
     }
-
+    /*
     public AnalistaEntity getAnalista() {
-        return analista;
+        return this.analista;
     }
+
 
     public void setAnalista(AnalistaEntity analista) {
         this.analista = analista;
     }
-
+    */
     public String getTicketRut() {
-        return ticketRut;
+        return this.ticketRut;
     }
 
     public void setTicketRut(String ticketRut) {
         this.ticketRut = ticketRut;
     }
 }
-

@@ -13,14 +13,15 @@ public class AnalistaEntity{
     private String correo;
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "analista")
-    private List<TicketEntity> ticket;
+
+    //@OneToMany(mappedBy = "analista")
+    //private List<TicketEntity> ticket;
 
     public AnalistaEntity(Long idAnalista, String correo, String password, List<TicketEntity> ticket) {
         this.idAnalista = idAnalista;
         this.correo = correo;
         this.password = password;
-        this.ticket = ticket;
+        //this.ticket = ticket;
     }
 
     public AnalistaEntity() {
@@ -50,7 +51,7 @@ public class AnalistaEntity{
     public void setPassword(String password) {
         this.password = password;
     }
-
+    /*
     public List<TicketEntity> getTicket() {
         return ticket;
     }
@@ -58,6 +59,6 @@ public class AnalistaEntity{
     public void setTicket(List<TicketEntity> ticket) {
         this.ticket = ticket;
     }
-
+    */
 
 }

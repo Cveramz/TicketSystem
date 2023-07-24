@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import sistemaTicket.backend.entities.TicketEntity;
 
+import java.util.List;
+
 @Repository
 public interface TicketRepository extends JpaRepository<TicketEntity, Long>{
     TicketEntity findByIdTicket(Long id);
@@ -13,5 +15,5 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Long>{
 
     void deleteByIdTicket(Long id);
 
-    TicketEntity findByTicketRut(String ticketRut);
+    List<TicketEntity> findByTicketRut(String ticketRut);
 }

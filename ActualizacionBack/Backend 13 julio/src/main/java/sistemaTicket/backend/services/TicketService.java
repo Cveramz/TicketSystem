@@ -1,41 +1,55 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package sistemaTicket.backend.services;
-import sistemaTicket.backend.entities.TicketEntity;
-import sistemaTicket.backend.repositories.TicketRepository;
+
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
-
+import sistemaTicket.backend.entities.TicketEntity;
+import sistemaTicket.backend.repositories.TicketRepository;
 
 @Service
-public class TicketService{
+public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
-    public TicketEntity guardar(TicketEntity nuevoTicket){
-        return ticketRepository.save(nuevoTicket);
-    }
-    public Iterable<TicketEntity> obtenerTodosTicket(){
-        return ticketRepository.findAll();
-    }
-    public Optional<TicketEntity> obtenerIdTicket(Long id){
-        return ticketRepository.findById(id);
+
+    public TicketService() {
     }
 
-    public TicketEntity obtenerTicketPorPrioridad(String prioridad){
-        return ticketRepository.findByPrioridad(prioridad);
-    }
-    public TicketEntity obtenerTicketPorId(Long id){
-        return ticketRepository.findByIdTicket(id);
-    }
-    public TicketEntity actualizarTicket(TicketEntity ticket){
-        return ticketRepository.save(ticket);
+    public TicketEntity guardar(TicketEntity nuevoTicket) {
+        return (TicketEntity)this.ticketRepository.save(nuevoTicket);
     }
 
-    public void eliminarTicket(Long id){
+    public Iterable<TicketEntity> obtenerTodosTicket() {
+        return this.ticketRepository.findAll();
+    }
+
+    public Optional<TicketEntity> obtenerIdTicket(Long id) {
+        return this.ticketRepository.findById(id);
+    }
+
+    public TicketEntity obtenerTicketPorPrioridad(String prioridad) {
+        return this.ticketRepository.findByPrioridad(prioridad);
+    }
+
+    public TicketEntity obtenerTicketPorId(Long id) {
+        return this.ticketRepository.findByIdTicket(id);
+    }
+
+    public TicketEntity actualizarTicket(TicketEntity ticket) {
+        return (TicketEntity)this.ticketRepository.save(ticket);
+    }
+
+    public void eliminarTicket(Long id) {
         System.out.println("Eliminacion de ticket");
-        ticketRepository.deleteByIdTicket(id);
+        this.ticketRepository.deleteByIdTicket(id);
     }
 
-    public TicketEntity obtenerTicketRut(String ticketRut){
-        return ticketRepository.findByTicketRut(ticketRut);
+    public List<TicketEntity> obtenerTicketRut(String ticketRut) {
+        return this.ticketRepository.findByTicketRut(ticketRut);
     }
 }

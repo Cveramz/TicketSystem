@@ -67,12 +67,12 @@ public class UsuarioController{
     }
     @PutMapping("/Actualizar-Usuario/{password}/{rut}")
     @CrossOrigin("*")
-    public ResponseEntity<String> changePassword(@PathVariable String newPassword, @PathVariable String rut){
+    public ResponseEntity<String> changePassword(@PathVariable String password, @PathVariable String rut){
         UsuarioEntity usuario = usuarioService.obtenerUserByRut(rut);
         if(usuario == null){
             return new ResponseEntity<>("No existe el usuario", HttpStatus.NOT_FOUND);
         }
-        usuarioService.changePassword(newPassword, rut);
+        usuarioService.changePassword(password, rut);
         return new ResponseEntity<>("Contraseña actualizada", HttpStatus.ACCEPTED);
     }
 }

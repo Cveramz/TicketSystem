@@ -1,84 +1,103 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package sistemaTicket.backend.controllers;
+
 import jakarta.transaction.Transactional;
-import org.springframework.dao.EmptyResultDataAccessException;
-import sistemaTicket.backend.entities.TicketEntity;
-import sistemaTicket.backend.entities.UsuarioEntity;
-import sistemaTicket.backend.services.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import sistemaTicket.backend.services.UsuarioService;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import sistemaTicket.backend.entities.TicketEntity;
+import sistemaTicket.backend.entities.UsuarioEntity;
+import sistemaTicket.backend.services.TicketService;
+import sistemaTicket.backend.services.UsuarioService;
 
 @RestController
-public class TicketController{
+public class TicketController {
     @Autowired
     private TicketService ticketService;
     private UsuarioService usuarioService;
 
-    @PostMapping(value = "/ticket/")
-    public ResponseEntity<TicketEntity> guardar(@RequestBody TicketEntity nuevoTicket){
-        TicketEntity Ticket = ticketService.guardar(nuevoTicket);
-        return new ResponseEntity<TicketEntity>(Ticket, HttpStatus.OK);
+    public TicketController() {
     }
 
-    @GetMapping("/tickets/")
-    @CrossOrigin("*")
-    public Iterable<TicketEntity> obtenerTodosTicket(){
-        return ticketService.obtenerTodosTicket();
+    @PostMapping({"/ticket/"})
+    public ResponseEntity<TicketEntity> guardar(@RequestBody TicketEntity nuevoTicket) {
+        TicketEntity Ticket = this.ticketService.guardar(nuevoTicket);
+        return new ResponseEntity(Ticket, HttpStatus.OK);
     }
 
-    @GetMapping("/ticket/{id}")
-    @CrossOrigin("*")
-    public Optional<TicketEntity> obtenerIdTicket(@PathVariable Long id){
-        return ticketService.obtenerIdTicket(id);
+    @GetMapping({"/tickets/"})
+    @CrossOrigin({"*"})
+    public Iterable<TicketEntity> obtenerTodosTicket() {
+        return this.ticketService.obtenerTodosTicket();
     }
 
-    @GetMapping(value = "/prioridad/{prioridad}")
-    @CrossOrigin("*")
-    public ResponseEntity<TicketEntity> obtenerTicketPorPrioridad(@PathVariable String prioridad){
-        return ResponseEntity.ok(ticketService.obtenerTicketPorPrioridad(prioridad));
+    @GetMapping({"/ticket/{id}"})
+    @CrossOrigin({"*"})
+    public Optional<TicketEntity> obtenerIdTicket(@PathVariable Long id) {
+        return this.ticketService.obtenerIdTicket(id);
     }
-    @PutMapping("/tickets/{id}")
-    @CrossOrigin("*")
-    public ResponseEntity<TicketEntity> ActualizarTicket(@PathVariable Long id, @RequestBody TicketEntity ticket){
-        TicketEntity ticketVigente = ticketService.obtenerTicketPorId(id);
-        if(ticketVigente == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @GetMapping({"/prioridad/{prioridad}"})
+    @CrossOrigin({"*"})
+    public ResponseEntity<TicketEntity> obtenerTicketPorPrioridad(@PathVariable String prioridad) {
+        return ResponseEntity.ok(this.ticketService.obtenerTicketPorPrioridad(prioridad));
+    }
+
+    @PutMapping({"/tickets/{id}"})
+    @CrossOrigin({"*"})
+    public ResponseEntity<TicketEntity> ActualizarTicket(@PathVariable Long id, @RequestBody TicketEntity ticket) {
+        TicketEntity ticketVigente = this.ticketService.obtenerTicketPorId(id);
+        if (ticketVigente == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } else {
+            ticketVigente.setEstadoTicket(ticket.getEstadoTicket());
+            TicketEntity ticketModificado = this.ticketService.actualizarTicket(ticketVigente);
+            return new ResponseEntity(ticketModificado, HttpStatus.OK);
         }
-        ticketVigente.setEstadoTicket(ticket.getEstadoTicket());
-        TicketEntity ticketModificado = ticketService.actualizarTicket(ticketVigente);
-        return new ResponseEntity<>(ticketModificado, HttpStatus.OK);
     }
 
     @Transactional
-    @DeleteMapping("/tickets/{id}")
-    @CrossOrigin("*")
-    public ResponseEntity<String> eliminarTicket(@PathVariable Long id){
-        try{
-            ticketService.eliminarTicket(id);
-            return new ResponseEntity<>("Ticket eliminado", HttpStatus.OK);
-        }catch (EmptyResultDataAccessException e){
-            return new ResponseEntity<>("Ticket no existe", HttpStatus.NOT_FOUND);
-        }catch (Exception e){
-            return new ResponseEntity<>("Fallo al eliminar ticket", HttpStatus.INTERNAL_SERVER_ERROR);
+    @DeleteMapping({"/tickets/{id}"})
+    @CrossOrigin({"*"})
+    public ResponseEntity<String> eliminarTicket(@PathVariable Long id) {
+        try {
+            this.ticketService.eliminarTicket(id);
+            return new ResponseEntity("Ticket eliminado", HttpStatus.OK);
+        } catch (EmptyResultDataAccessException var3) {
+            return new ResponseEntity("Ticket no existe", HttpStatus.NOT_FOUND);
+        } catch (Exception var4) {
+            return new ResponseEntity("Fallo al eliminar ticket", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/ticket/{ticketRut}/{rut}")
-    @CrossOrigin("*")
-    public ResponseEntity<TicketEntity> obtenerTicketRut(@PathVariable String ticketRut, @PathVariable String rut){
-        TicketEntity TicketAsociado = ticketService.obtenerTicketRut(ticketRut);
-        UsuarioEntity rutAsociado = usuarioService.obtenerUserByRut(rut);
-        if(TicketAsociado == null){
+    // GET: http://localhost:8080/tickets-rut/21333444-k
+    @GetMapping("/tickets-rut/{ticketRut}")
+    @CrossOrigin({"*"})
+    public ResponseEntity<List<TicketEntity>> obtenerTicketsPorRut(@PathVariable String ticketRut) {
+        List<TicketEntity> tickets = this.ticketService.obtenerTicketRut(ticketRut);
+
+        if (!tickets.isEmpty()) {
+            System.out.println("Tickets encontrados");
+            return new ResponseEntity<>(tickets, HttpStatus.OK);
+        } else {
+            System.out.println("Tickets no encontrados");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if(TicketAsociado.getTicketRut().equals(rutAsociado.getRut())){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

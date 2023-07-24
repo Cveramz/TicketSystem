@@ -11,6 +11,7 @@ public class AnalistaController{
     @Autowired
     private AnalistaService analistaService;
 
+    /*
     @PutMapping("/tickets/{idTicket}/asignar-analista/{idAnalista}")
     public ResponseEntity<String> AsignarAnalista(@PathVariable Long idAnalista, @PathVariable Long idTicket){
         analistaService.AsignarAnalista(idAnalista, idTicket);
@@ -21,4 +22,5 @@ public class AnalistaController{
         AnalistaEntity analista1 = analistaService.guardar(analista);
         return new ResponseEntity<AnalistaEntity>(analista1, HttpStatus.OK);
     }
+    */
 }

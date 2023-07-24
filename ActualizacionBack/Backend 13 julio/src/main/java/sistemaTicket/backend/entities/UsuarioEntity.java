@@ -18,7 +18,7 @@ public class UsuarioEntity {
     private String correo;
     @Column(name = "password")
     private String password;
-    @Column(name = "rut", unique = true)
+    @Column(name = "rut")
     private String rut;
 
     public UsuarioEntity(Long idUsuario, String nombre, String apellido, String correo, String password, String rut) {
