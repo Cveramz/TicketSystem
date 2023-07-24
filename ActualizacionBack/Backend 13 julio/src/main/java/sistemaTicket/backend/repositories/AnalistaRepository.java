@@ -6,4 +6,5 @@ import sistemaTicket.backend.entities.AnalistaEntity;
 
 @Repository
 public interface AnalistaRepository extends JpaRepository<AnalistaEntity, Long> {
+    AnalistaEntity findByIdAnalista(Long id);
 }
