@@ -1,5 +1,7 @@
 package sistemaTicket.backend.services;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import sistemaTicket.backend.entities.UsuarioEntity;
 import sistemaTicket.backend.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +33,18 @@ public class UsuarioService {
     public UsuarioEntity buscarUsuariosExistentes(String correo, String password){
         return usuarioRepository.findByCorreoAndPassword(correo, password);
     }
-    public UsuarioEntity SystemLogin(String correo, String password){
-        UsuarioEntity User = usuarioRepository.findByCorreoAndPassword(correo, password);
-        if(User == null){
+    public ResponseEntity<UsuarioEntity> SystemLogin(String correo, String password) {
+        UsuarioEntity user = usuarioRepository.findByCorreoAndPassword(correo, password);
+        if (user == null) {
             System.out.println("No existe el usuario en el sistema");
-        } else if (User.getPassword().equals(password) && User.getCorreo().equals(correo)){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else if (user.getPassword().equals(password) && user.getCorreo().equals(correo)) {
             System.out.println("Credenciales correctas");
-            return User;
-        }else {
-            throw new RuntimeException("Datos incorrectos");
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            System.out.println("Datos incorrectos");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        return User;
     }
 
     public void eliminarUsuario(String correo){

@@ -81,5 +81,7 @@ public class UsuarioEntity {
     public void setRut(String rut) {
         this.rut = rut;
     }
+
+
 }
 

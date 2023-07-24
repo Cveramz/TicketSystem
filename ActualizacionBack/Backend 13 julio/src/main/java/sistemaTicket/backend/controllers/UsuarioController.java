@@ -33,16 +33,15 @@ public class UsuarioController{
         return usuarioService.obtenerUsuario(id);
     }
 
-    @PostMapping("/Login")
+    //GET: http://localhost:8080/validar-usuario?correo=cr7,a@usach.cl&password=rm2018
+    @GetMapping("/validar-usuario")
     @CrossOrigin("*")
-    public ResponseEntity<UsuarioEntity> SystemLogin(@RequestBody UsuarioEntity User){
-        String correoUser = User.getCorreo();
-        String passwordUser = User.getPassword();
-        UsuarioEntity newUser = usuarioService.SystemLogin(correoUser, passwordUser);
+    public ResponseEntity<UsuarioEntity> SystemLogin(@RequestParam String correo, @RequestParam String password){
+        UsuarioEntity newUser = usuarioService.SystemLogin(correo, password).getBody();
         if(newUser == null){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }else{
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(newUser, HttpStatus.OK);
         }
     }
 
