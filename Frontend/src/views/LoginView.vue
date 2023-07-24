@@ -1,6 +1,5 @@
 
 <script>
-
 import LoginService from "../services/LoginDataService.js";
 
 export default {
@@ -10,6 +9,11 @@ export default {
       valid: false,
       email: '',
       password: '',
+      usuario: {
+        nombre: '',
+        apellido: '',
+        correo: '',
+      },
       emailrules: [
         v => !!v || 'El correo es requerido',
         v => /.+@usach\.cl$/.test(v) || 'El correo debe ser @usach.cl',
@@ -22,25 +26,37 @@ export default {
   methods: {
     async submitForm() {
       if (this.validarInformacion()) {
-        // Realizar la solicitud al backend para iniciar sesión
         try {
           const response = await LoginService.login(this.email, this.password);
 
           if (response.status === 200) {
-            // Inicio de sesión exitoso, redirigir a la página deseada
-            alert('Inicio de sesión exitoso')
-            this.redirectToPage();
-          } else {
+            // Verificar si la respuesta contiene los datos del usuario
+            if (response.data && response.data.nombre && response.data.correo) {
+              // Asignar los valores del usuario a las propiedades en la data
+              this.usuario.nombre = response.data.nombre;
+              this.usuario.apellido = response.data.apellido || '';
+              this.usuario.correo = response.data.correo;
+
+              // Construir el mensaje de bienvenida con los campos disponibles
+              const mensajeBienvenida = `Bienvenido, ${this.usuario.nombre}${
+                this.usuario.apellido ? ' ' + this.usuario.apellido : ''
+              } (${this.usuario.correo}).`;
+
+              // Mostrar el mensaje de bienvenida en el alert
+              alert(mensajeBienvenida);
+
+              // Redirigir a la página deseada después del inicio de sesión
+              this.redirectToPage();
+            } else {
+              alert('Error al obtener los datos del usuario.');
+            }
+          } else if (response.status === 401) {
             // Inicio de sesión fallido, mostrar mensaje de error
             alert('Credenciales inválidas. Revise el correo y la contraseña.');
           }
         } catch (error) {
-          // Si es 404 es porque no se encontró el recurso
-          if (error.response.status === 401) {
-            alert('Credenciales inválidas. Revise el correo y la contraseña.');
-          } else {
-            alert('Error al iniciar sesión. Intente nuevamente más tarde.');
-          }
+          // Manejar el error, mostrar mensaje de error genérico
+          alert('Error al iniciar sesión. Intente nuevamente más tarde.');
         }
       }
     },
@@ -58,6 +74,7 @@ export default {
     }
   }
 };
+
 </script>
 
 

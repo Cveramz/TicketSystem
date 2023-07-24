@@ -37,11 +37,11 @@ public class UsuarioController{
     @GetMapping("/validar-usuario")
     @CrossOrigin("*")
     public ResponseEntity<UsuarioEntity> SystemLogin(@RequestParam String correo, @RequestParam String password){
-        UsuarioEntity newUser = usuarioService.SystemLogin(correo, password);
+        UsuarioEntity newUser = usuarioService.SystemLogin(correo, password).getBody();
         if(newUser == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }else{
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(newUser, HttpStatus.OK);
         }
     }
 }
