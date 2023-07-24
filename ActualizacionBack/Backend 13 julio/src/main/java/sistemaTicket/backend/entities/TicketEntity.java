@@ -1,10 +1,13 @@
 package sistemaTicket.backend.entities;
+
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "reclamo")
+
 public class TicketEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +29,15 @@ public class TicketEntity{
     private Date ultimaActualizacion;
     @Column(name = "resolucion")
     private String resolucion;
+    @Column(name = "Prioridad")
+    private String prioridad;
+    @ManyToOne
+    @JoinColumn(name = "idAnalista")
+    private AnalistaEntity analista;
 
-    public TicketEntity(Long idTicket, String categoria, String descripcion, String consulta, String comentarios, String estadoTicket, Date fechaCreacion, Date ultimaActualizacion, String resolucion) {
+
+
+    public TicketEntity(Long idTicket, String categoria, String descripcion, String consulta, String comentarios, String estadoTicket, Date fechaCreacion, Date ultimaActualizacion, String resolucion, String prioridad, AnalistaEntity analista) {
         this.idTicket = idTicket;
         this.categoria = categoria;
         this.descripcion = descripcion;
@@ -37,6 +47,8 @@ public class TicketEntity{
         this.fechaCreacion = fechaCreacion;
         this.ultimaActualizacion = ultimaActualizacion;
         this.resolucion = resolucion;
+        this.prioridad = prioridad;
+        this.analista = analista;
     }
 
     public TicketEntity() {
@@ -114,4 +126,21 @@ public class TicketEntity{
     public void setResolucion(String resolucion) {
         this.resolucion = resolucion;
     }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public AnalistaEntity getAnalista() {
+        return analista;
+    }
+
+    public void setAnalista(AnalistaEntity analista) {
+        this.analista = analista;
+    }
 }
+

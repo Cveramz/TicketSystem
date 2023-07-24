@@ -1,197 +1,54 @@
 package sistemaTicket.backend.services;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.stereotype.Service;
 import sistemaTicket.backend.entities.UsuarioEntity;
 import sistemaTicket.backend.repositories.UsuarioRepository;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
-public class UsuarioService implements UsuarioRepository{
+public class UsuarioService {
+
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    UsuarioRepository usuarioRepository;
 
-    public void IniciarSeccion(String correo, String password){
-        List<UsuarioEntity> usuarios = usuarioRepository.findBycorreo(correo).stream().collect(Collectors.toList());
-        for(UsuarioEntity usuario : usuarios){
-            if(usuario.getPassword().equals(password)){
-                System.out.println("Usuario en el sistema");
-            }else{
-                System.out.println("Usuario no existe en el sistema");
-            }
+    public UsuarioEntity guardar(@RequestBody UsuarioEntity usuarioEntityNuevo){
+        return usuarioRepository.save(usuarioEntityNuevo);
+    }
+
+    public Iterable<UsuarioEntity> todos(){
+        return usuarioRepository.findAll();
+    }
+
+    public Optional<UsuarioEntity> obtenerUsuario(Long id){
+        return usuarioRepository.findById(id);
+    }
+
+    public Optional<UsuarioEntity> obtenerListadoRut(Long rut){
+        return usuarioRepository.findById(rut);
+    }
+
+    public UsuarioEntity buscarUsuariosExistentes(String correo, String password){
+        return usuarioRepository.findByCorreoAndPassword(correo, password);
+    }
+    public UsuarioEntity SystemLogin(String correo, String password){
+        UsuarioEntity User = usuarioRepository.findByCorreoAndPassword(correo, password);
+        if(User == null){
+            System.out.println("No existe el usuario en el sistema");
+        } else if (User.getPassword().equals(password) && User.getCorreo().equals(correo)){
+            System.out.println("Credenciales correctas");
+            return User;
+        }else {
+            throw new RuntimeException("Datos incorrectos");
         }
+        return User;
     }
 
-
-    @Override
-    public void flush() {
-
+    public void eliminarUsuario(String correo){
+       usuarioRepository.deleteByCorreo(correo);
     }
 
-    @Override
-    public <S extends UsuarioEntity> S saveAndFlush(S entity) {
-        return null;
+    public UsuarioEntity obtenerUserByRut(String rut){
+        return usuarioRepository.findUserByRut(rut);
     }
-
-    @Override
-    public <S extends UsuarioEntity> List<S> saveAllAndFlush(Iterable<S> entities) {
-        return null;
-    }
-
-    @Override
-    public void deleteInBatch(Iterable<UsuarioEntity> entities) {
-        UsuarioRepository.super.deleteInBatch(entities);
-    }
-
-    @Override
-    public void deleteAllInBatch(Iterable<UsuarioEntity> entities) {
-
-    }
-
-    @Override
-    public void deleteAllByIdInBatch(Iterable<Long> longs) {
-
-    }
-
-    @Override
-    public void deleteAllInBatch() {
-
-    }
-
-    @Override
-    public UsuarioEntity getOne(Long aLong) {
-        return null;
-    }
-
-    @Override
-    public UsuarioEntity getById(Long aLong) {
-        return null;
-    }
-
-    @Override
-    public UsuarioEntity getReferenceById(Long aLong) {
-        return null;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
-
-    @Override
-    public <S extends UsuarioEntity> List<S> findAll(Example<S> example) {
-        return null;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> List<S> findAll(Example<S> example, Sort sort) {
-        return null;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> long count(Example<S> example) {
-        return 0;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> boolean exists(Example<S> example) {
-        return false;
-    }
-
-    @Override
-    public <S extends UsuarioEntity, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> S save(S entity) {
-        return null;
-    }
-
-    @Override
-    public <S extends UsuarioEntity> List<S> saveAll(Iterable<S> entities) {
-        return null;
-    }
-
-    @Override
-    public Optional<UsuarioEntity> findById(Long aLong) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return false;
-    }
-
-    @Override
-    public List<UsuarioEntity> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<UsuarioEntity> findAllById(Iterable<Long> longs) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-
-    }
-
-    @Override
-    public void delete(UsuarioEntity entity) {
-
-    }
-
-    @Override
-    public void deleteAllById(Iterable<? extends Long> longs) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends UsuarioEntity> entities) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
-
-    @Override
-    public List<UsuarioEntity> findAll(Sort sort) {
-        return null;
-    }
-
-    @Override
-    public Page<UsuarioEntity> findAll(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public Optional<UsuarioEntity> findBycorreo(String correo) {
-        Optional<UsuarioEntity> usuarios = usuarioRepository.findBycorreo(correo);
-        return Optional.ofNullable(usuarios.orElse(null));
-    }
-
-
 }
