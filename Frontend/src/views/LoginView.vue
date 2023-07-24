@@ -1,6 +1,7 @@
 
 <script>
 import LoginService from "../services/LoginDataService.js";
+import VueCookies from 'vue-cookies';
 
 export default {
   name: 'LoginView',
@@ -13,6 +14,7 @@ export default {
         nombre: '',
         apellido: '',
         correo: '',
+        rut: '',
       },
       emailrules: [
         v => !!v || 'El correo es requerido',
@@ -25,41 +27,48 @@ export default {
   },
   methods: {
     async submitForm() {
-      if (this.validarInformacion()) {
-        try {
-          const response = await LoginService.login(this.email, this.password);
+  if (this.validarInformacion()) {
+    try {
+      const response = await LoginService.login(this.email, this.password);
 
-          if (response.status === 200) {
-            // Verificar si la respuesta contiene los datos del usuario
-            if (response.data && response.data.nombre && response.data.correo) {
-              // Asignar los valores del usuario a las propiedades en la data
-              this.usuario.nombre = response.data.nombre;
-              this.usuario.apellido = response.data.apellido || '';
-              this.usuario.correo = response.data.correo;
+      if (response.status === 200) {
+        // Verificar si la respuesta contiene los datos del usuario
+        if (response.data && response.data.nombre && response.data.correo) {
+          // Asignar los valores del usuario a las propiedades en la data
+          this.usuario.nombre = response.data.nombre;
+          this.usuario.apellido = response.data.apellido || '';
+          this.usuario.correo = response.data.correo;
+          this.usuario.rut = response.data.rut || '';
+          // Guardar la información del usuario en una cookie
+          VueCookies.set('usuario', JSON.stringify(this.usuario));
 
-              // Construir el mensaje de bienvenida con los campos disponibles
-              const mensajeBienvenida = `Bienvenido, ${this.usuario.nombre}${
-                this.usuario.apellido ? ' ' + this.usuario.apellido : ''
-              } (${this.usuario.correo}).`;
+          // Construir el mensaje de bienvenida con los campos disponibles
+          const mensajeBienvenida = `Bienvenido, ${this.usuario.nombre}${
+            this.usuario.apellido ? ' ' + this.usuario.apellido : ''
+          } (${this.usuario.correo}).`;
 
-              // Mostrar el mensaje de bienvenida en el alert
-              alert(mensajeBienvenida);
+          // Mostrar el mensaje de bienvenida en el alert
+          alert(mensajeBienvenida);
 
-              // Redirigir a la página deseada después del inicio de sesión
-              this.redirectToPage();
-            } else {
-              alert('Error al obtener los datos del usuario.');
-            }
-          } else if (response.status === 401) {
-            // Inicio de sesión fallido, mostrar mensaje de error
-            alert('Credenciales inválidas. Revise el correo y la contraseña.');
-          }
-        } catch (error) {
-          // Manejar el error, mostrar mensaje de error genérico
-          alert('Error al iniciar sesión. Intente nuevamente más tarde.');
+          // Redirigir a la página deseada después del inicio de sesión
+          this.redirectToPage();
+        } else {
+          alert('Error al obtener los datos del usuario.');
         }
       }
-    },
+    } catch (error) {
+      // Manejar el error
+      if (error.response && error.response.status === 401) {
+        // Inicio de sesión fallido, mostrar mensaje de error
+        alert('Credenciales inválidas. Revise el correo y la contraseña.');
+      } else {
+        // Error general, mostrar mensaje de error genérico
+        alert('Error al iniciar sesión. Intente nuevamente más tarde.');
+      }
+    }
+  }
+},
+
     validarInformacion() {
       if (this.email.indexOf('@usach.cl') === -1 || this.password === '') {
         alert('Revise que los datos ingresados sean correctos');
@@ -104,6 +113,7 @@ export default {
             label="Contraseña"
             required
             type="password"
+            @keyup.enter="submitForm"
           ></v-text-field>
 
           <div class="botones">
