@@ -11,4 +11,6 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity,Long> {
     void deleteByCorreo(String correo);
 
     UsuarioEntity findUserByRut(String rut);
+
+
 }

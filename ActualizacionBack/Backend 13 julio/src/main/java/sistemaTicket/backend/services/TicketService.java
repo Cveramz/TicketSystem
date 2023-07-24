@@ -34,4 +34,8 @@ public class TicketService{
         System.out.println("Eliminacion de ticket");
         ticketRepository.deleteByIdTicket(id);
     }
+
+    public TicketEntity obtenerTicketRut(String ticketRut){
+        return ticketRepository.findByTicketRut(ticketRut);
+    }
 }
