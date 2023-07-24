@@ -1,4 +1,5 @@
 package sistemaTicket.backend.services;
+import jakarta.persistence.EntityNotFoundException;
 import sistemaTicket.backend.entities.UsuarioEntity;
 import sistemaTicket.backend.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +51,15 @@ public class UsuarioService {
     public UsuarioEntity obtenerUserByRut(String rut){
         return usuarioRepository.findUserByRut(rut);
     }
+
+    public void changePassword(String newPassword, String rut){
+        UsuarioEntity usuario = usuarioRepository.findUserByRut(rut);
+        if(usuario == null){
+            throw new EntityNotFoundException("El usuario no existe");
+        }else{
+            usuario.setPassword(newPassword);
+            usuarioRepository.save(usuario);
+        }
+    }
+
 }

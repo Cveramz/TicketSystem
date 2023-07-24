@@ -23,6 +23,8 @@ public class TicketEntity{
     private String comentarios;
     @Column(name = "estadoTicket")
     private String estadoTicket;
+    @Column(name = "ticketRut")
+    private String ticketRut;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date fechaCreacion;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -37,7 +39,7 @@ public class TicketEntity{
 
 
 
-    public TicketEntity(Long idTicket, String categoria, String descripcion, String consulta, String comentarios, String estadoTicket, Date fechaCreacion, Date ultimaActualizacion, String resolucion, String prioridad, AnalistaEntity analista) {
+    public TicketEntity(Long idTicket, String categoria, String descripcion, String consulta, String comentarios, String estadoTicket, Date fechaCreacion, Date ultimaActualizacion, String resolucion, String prioridad, AnalistaEntity analista, String ticketRut) {
         this.idTicket = idTicket;
         this.categoria = categoria;
         this.descripcion = descripcion;
@@ -49,6 +51,7 @@ public class TicketEntity{
         this.resolucion = resolucion;
         this.prioridad = prioridad;
         this.analista = analista;
+        this.ticketRut = ticketRut;
     }
 
     public TicketEntity() {
@@ -141,6 +144,14 @@ public class TicketEntity{
 
     public void setAnalista(AnalistaEntity analista) {
         this.analista = analista;
+    }
+
+    public String getTicketRut() {
+        return ticketRut;
+    }
+
+    public void setTicketRut(String ticketRut) {
+        this.ticketRut = ticketRut;
     }
 }
 

@@ -12,4 +12,6 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Long>{
     TicketEntity findByestadoTicket(String estadoTicket);
 
     void deleteByIdTicket(Long id);
+
+    TicketEntity findByTicketRut(String ticketRut);
 }

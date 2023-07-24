@@ -2,17 +2,22 @@ package sistemaTicket.backend.controllers;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.EmptyResultDataAccessException;
 import sistemaTicket.backend.entities.TicketEntity;
+import sistemaTicket.backend.entities.UsuarioEntity;
 import sistemaTicket.backend.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sistemaTicket.backend.services.UsuarioService;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class TicketController{
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
+    private UsuarioService usuarioService;
 
     @PostMapping(value = "/ticket/")
     public ResponseEntity<TicketEntity> guardar(@RequestBody TicketEntity nuevoTicket){
@@ -61,5 +66,19 @@ public class TicketController{
         }catch (Exception e){
             return new ResponseEntity<>("Fallo al eliminar ticket", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/ticket/{ticketRut}/{rut}")
+    @CrossOrigin("*")
+    public ResponseEntity<TicketEntity> obtenerTicketRut(@PathVariable String ticketRut, @PathVariable String rut){
+        TicketEntity TicketAsociado = ticketService.obtenerTicketRut(ticketRut);
+        UsuarioEntity rutAsociado = usuarioService.obtenerUserByRut(rut);
+        if(TicketAsociado == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(TicketAsociado.getTicketRut().equals(rutAsociado.getRut())){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
