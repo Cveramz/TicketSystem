@@ -2,10 +2,13 @@ package sistemaTicket.backend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import sistemaTicket.backend.entities.UsuarioEntity;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+@Repository
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity,Long> {
+    UsuarioEntity findByCorreoAndPassword(String correo, String password);
 
-public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long>{
+    void deleteByCorreo(String correo);
 
-    public Optional<UsuarioEntity> findBycorreo(String correo);
+    UsuarioEntity findUserByRut(String rut);
 }

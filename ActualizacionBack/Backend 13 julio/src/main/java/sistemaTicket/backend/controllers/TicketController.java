@@ -1,45 +1,65 @@
 package sistemaTicket.backend.controllers;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import jakarta.transaction.Transactional;
+import org.springframework.dao.EmptyResultDataAccessException;
 import sistemaTicket.backend.entities.TicketEntity;
 import sistemaTicket.backend.services.TicketService;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("ticket")
-
 public class TicketController{
-    private TicketService ticketService;
-    @PostMapping("/CrearTicket")
-    public TicketEntity guardarTicket(@RequestBody TicketEntity ticket){
-        ticketService.save(ticket);
-    }
-    @GetMapping(value = "/MostrarTickets/")
-    //@CrossOrigin("*")
-    public List<TicketEntity> MostrarTickets(){
-        return ticketService.findAll();
+    @Autowired
+    TicketService ticketService;
+
+    @PostMapping(value = "/ticket/")
+    public ResponseEntity<TicketEntity> guardar(@RequestBody TicketEntity nuevoTicket){
+        TicketEntity Ticket = ticketService.guardar(nuevoTicket);
+        return new ResponseEntity<TicketEntity>(Ticket, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/BuscarTickets")
+    @GetMapping("/tickets/")
     @CrossOrigin("*")
-    public TicketEntity buscarTickets(@PathVariable Long id){
-        System.out.println("Buscar tickets");
-        return ticketService.findById(id).get();
+    public Iterable<TicketEntity> obtenerTodosTicket(){
+        return ticketService.obtenerTodosTicket();
     }
-    @PutMapping
-    @CrossOrigin("*")
 
-    public ResponseEntity<TicketEntity> actualizarTickets(@PathVariable TicketEntity ticket1){
+    @GetMapping("/ticket/{id}")
+    @CrossOrigin("*")
+    public Optional<TicketEntity> obtenerIdTicket(@PathVariable Long id){
+        return ticketService.obtenerIdTicket(id);
+    }
+
+    @GetMapping(value = "/prioridad/{prioridad}")
+    @CrossOrigin("*")
+    public ResponseEntity<TicketEntity> obtenerTicketPorPrioridad(@PathVariable String prioridad){
+        return ResponseEntity.ok(ticketService.obtenerTicketPorPrioridad(prioridad));
+    }
+    @PutMapping("/tickets/{id}")
+    @CrossOrigin("*")
+    public ResponseEntity<TicketEntity> ActualizarTicket(@PathVariable Long id, @RequestBody TicketEntity ticket){
+        TicketEntity ticketVigente = ticketService.obtenerTicketPorId(id);
+        if(ticketVigente == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ticketVigente.setEstadoTicket(ticket.getEstadoTicket());
+        TicketEntity ticketModificado = ticketService.actualizarTicket(ticketVigente);
+        return new ResponseEntity<>(ticketModificado, HttpStatus.OK);
+    }
+
+    @Transactional
+    @DeleteMapping("/tickets/{id}")
+    @CrossOrigin("*")
+    public ResponseEntity<String> eliminarTicket(@PathVariable Long id){
         try{
-            TicketEntity ticket2 = ticketService.save(ticket1);
-            return ResponseEntity.created(new URI("/ticket"+ticket1.getIdTicket())).body(ticket2);
-        }catch (URISyntaxException e){
-            throw new RuntimeException(e);
+            ticketService.eliminarTicket(id);
+            return new ResponseEntity<>("Ticket eliminado", HttpStatus.OK);
+        }catch (EmptyResultDataAccessException e){
+            return new ResponseEntity<>("Ticket no existe", HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>("Fallo al eliminar ticket", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
