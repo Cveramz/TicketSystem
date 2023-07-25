@@ -76,7 +76,7 @@
           <v-col cols="12" md="4">
             <v-card class="dashboard-card" to="/crearticket">
               <v-card-text class="dashboard-card-text">
-                <v-icon size="48" class="dashboard-card-icon">mdi-ticket-confirmation</v-icon>
+                <v-icon size="48" class="dashboard-card-icon">mdi-message-reply</v-icon>
                 <p>Responder ticket</p>
               </v-card-text>
             </v-card>
@@ -84,10 +84,10 @@
 
           <!-- Administrar Cuentas -->
           <v-col cols="12" md="4">
-            <v-card class="dashboard-card" to="/micuenta">
+            <v-card class="dashboard-card" to="/admin/eliminartickets">
               <v-card-text class="dashboard-card-text">
-                <v-icon size="48" class="dashboard-card-icon">mdi-account</v-icon>
-                <p>Administrar Cuenta</p>
+                <v-icon size="48" class="dashboard-card-icon">mdi-delete-circle</v-icon>
+                <p>Eliminar Ticket</p>
               </v-card-text>
             </v-card>
           </v-col>

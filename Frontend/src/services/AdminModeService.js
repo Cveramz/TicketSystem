@@ -10,6 +10,15 @@ class AdminModeService {
             alert(error);
         }
     }
+
+
+    deleteTicket(id) {
+        try {
+            return http.delete(`/tickets/${id}`);
+        } catch (error) {
+            alert(error);
+        }
+    }
 }
 
 export default new AdminModeService();
