@@ -17,7 +17,7 @@
 
 
 
-    <v-app-bar app color="#EA7600" class="text-white">
+    <v-app-bar app color="#00a499" class="text-white">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>MODO ADMIN</v-toolbar-title>
 

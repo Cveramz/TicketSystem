@@ -17,7 +17,7 @@
 
 
   
-      <v-app-bar app color="#EA7600" class="text-white">
+      <v-app-bar app color="#00a499" class="text-white">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>MODO ADMIN</v-toolbar-title>
   
@@ -76,8 +76,8 @@
           <v-col cols="12" md="4">
             <v-card class="dashboard-card" to="/crearticket">
               <v-card-text class="dashboard-card-text">
-                <v-icon size="48" class="dashboard-card-icon">mdi-new-box</v-icon>
-                <p>Crear Ticket</p>
+                <v-icon size="48" class="dashboard-card-icon">mdi-ticket-confirmation</v-icon>
+                <p>Responder ticket</p>
               </v-card-text>
             </v-card>
           </v-col>
@@ -160,6 +160,6 @@ export default {
 }
 
 .dashboard-card-icon {
-  color: #ea7600;
+  color: #00a499;
 }
 </style>

@@ -25,6 +25,13 @@ export default {
       ],
     };
   },
+  mounted() {
+    // Si existe una cookie, se envía directamente a la página de inicio (dashboard)
+    const usuarioCookie = VueCookies.get('usuario');
+    if (usuarioCookie) {
+      this.redirectToPage();      
+    }
+  },
   methods: {
     async submitForm() {
   if (this.validarInformacion()) {
@@ -121,7 +128,7 @@ export default {
           <v-btn
             color="#EA3900"
             class="mr-4 text-white"
-            @click="redirectToPage"
+            to="/invitado"
           >
             Entrar como invitado
           </v-btn>
