@@ -60,17 +60,16 @@ public class TicketController {
         return ResponseEntity.ok(this.ticketService.obtenerTicketPorPrioridad(prioridad));
     }
 
-    @PutMapping({"/tickets/{id}"})
-    @CrossOrigin({"*"})
-    public ResponseEntity<TicketEntity> ActualizarTicket(@PathVariable Long id, @RequestBody TicketEntity ticket) {
-        TicketEntity ticketVigente = this.ticketService.obtenerTicketPorId(id);
+    @PutMapping("/tickets/{id}/{estadoTicket}")
+    @CrossOrigin("*")
+    public ResponseEntity<TicketEntity> ActualizarTicket(@PathVariable Long id, @PathVariable String estadoTicket) {
+        TicketEntity ticketVigente = ticketService.obtenerTicketPorId(id);
         if (ticketVigente == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else {
-            ticketVigente.setEstadoTicket(ticket.getEstadoTicket());
-            TicketEntity ticketModificado = this.ticketService.actualizarTicket(ticketVigente);
-            return new ResponseEntity(ticketModificado, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        ticketVigente.setEstadoTicket(estadoTicket);
+        TicketEntity ticketModificado = ticketService.actualizarTicket(ticketVigente);
+        return new ResponseEntity<>(ticketModificado, HttpStatus.OK);
     }
 
     @Transactional
