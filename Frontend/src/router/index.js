@@ -35,6 +35,21 @@ const routes = [
     component: () => import('../views/MyTicketsView.vue')
   },
   {
+    path: '/admin/tickets',
+    name: 'admintickets',
+    component: () => import('../views/ADMINTicketsView.vue')
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'admindashboard',
+    component: () => import('../views/ADMINDashboardView.vue')
+  },
+  {
+    path: '/admin/',
+    name: 'adminhome',
+    component: () => import('../views/ADMINDashboardView.vue')
+  },
+  {
     path: '/crearticket',
     name: 'crearticket',
     component: () => import('../views/CreateTicketView.vue')

@@ -22,10 +22,6 @@
       <v-icon>mdi-account</v-icon>
       Administrar cuenta
     </v-btn>
-    <v-btn color="#EA3900" class="mr-4 v-btn--block mt-4" @click="cerrarSesion">
-      <v-icon>mdi-account</v-icon>
-      Cerrar Sesión
-    </v-btn>
 
   </v-col>
 </v-layout>
@@ -42,12 +38,28 @@
       <v-btn>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn @click="dialog  = true">
         <v-icon>mdi-account-box</v-icon>
         {{ usuario.nombre}} {{ usuario.apellido}}
       </v-btn>
-      
     </v-app-bar>
+    <v-dialog v-model="dialog" max-width="400">
+<v-card class="position-relative">
+  <v-btn icon @click="dialog = false" class="ml-auto mr-4">
+<v-icon>mdi-close</v-icon>
+</v-btn>
+
+  <v-card-title class="headline">Perfil de Usuario</v-card-title>
+  <v-card-text>
+    <p>Nombre: {{ usuario.nombre }}</p>
+    <p>Correo: {{ usuario.correo }}</p>
+  </v-card-text>
+  <v-card-actions class="justify-space-between">
+    <!-- Botón para cerrar sesión -->
+    <v-btn color="#EA3900" @click="cerrarSesion">Cerrar Sesión</v-btn>
+  </v-card-actions>
+</v-card>
+</v-dialog>
 
     <v-main>
       <!-- Contenido principal de la aplicación -->
@@ -65,6 +77,7 @@ data() {
   return {
     drawer: false,
     usuario: {}, // Variable para almacenar la información del usuario
+    dialog: false,
   };
 },
 mounted() {
@@ -73,10 +86,6 @@ mounted() {
   if (usuarioCookie) {
     // Si la cookie existe, asignar el valor a la variable usuario
     this.usuario = usuarioCookie;
-    //mostrar en pantalla nombre,correo y rut
-    console.log(this.usuario.nombre);
-    console.log(this.usuario.correo);
-    console.log(this.usuario.rut);
   } else {
     // Si la cookie no existe, redirigir al login
     this.$router.push('/login');

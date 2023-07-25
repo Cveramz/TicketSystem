@@ -35,10 +35,11 @@ public class TicketController {
     public TicketController() {
     }
 
-    @PostMapping({"/ticket/"})
+    @PostMapping("/ticket")
+    @CrossOrigin(origins = "*") // Agrega aquí la URL de tu frontend
     public ResponseEntity<TicketEntity> guardar(@RequestBody TicketEntity nuevoTicket) {
         TicketEntity Ticket = this.ticketService.guardar(nuevoTicket);
-        return new ResponseEntity(Ticket, HttpStatus.OK);
+        return new ResponseEntity<>(Ticket, HttpStatus.OK);
     }
 
     @GetMapping({"/tickets/"})

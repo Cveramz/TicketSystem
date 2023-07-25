@@ -6,21 +6,9 @@
       <img src="../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
       <v-divider></v-divider>
       <p class="headline">Bienvenido al sistema de tickets</p>
-      <v-btn class="mr-4 v-btn--block mt-4" to="/dashboard">
+      <v-btn class="mr-4 v-btn--block mt-4" to="/admin">
         <v-icon>mdi-home</v-icon>
         Inicio
-      </v-btn>
-      <v-btn class="mr-4 v-btn--block mt-4" to="/mistickets">
-        <v-icon>mdi-ticket-account</v-icon>
-        Mis Tickets
-      </v-btn>
-      <v-btn class="mr-4 v-btn--block mt-4" to="/crearticket">
-        <v-icon>mdi-new-box</v-icon>
-        Crear Ticket
-      </v-btn>
-      <v-btn class="mr-4 v-btn--block mt-4" to="micuenta">
-        <v-icon>mdi-account</v-icon>
-        Administrar cuenta
       </v-btn>
 
     </v-col>
@@ -31,10 +19,10 @@
   
       <v-app-bar app color="#EA7600" class="text-white">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>Sistema de Tickets: Inicio</v-toolbar-title>
+        <v-toolbar-title>MODO ADMIN</v-toolbar-title>
   
         <v-spacer></v-spacer>
-        <v-btn class="btn" icon="mdi-home" to="/dashboard"></v-btn>
+        <v-btn class="btn" icon="mdi-home" to="/admin"></v-btn>
         <v-btn>
           <v-icon>mdi-bell</v-icon>
         </v-btn>
@@ -76,10 +64,10 @@
         <v-row>
           <!-- Mis Tickets -->
           <v-col cols="12" md="4">
-            <v-card class="dashboard-card" to="/mistickets">
+            <v-card class="dashboard-card" to="/admin/tickets">
               <v-card-text class="dashboard-card-text">
                 <v-icon size="48" class="dashboard-card-icon">mdi-ticket-account</v-icon>
-                <p>Mis Tickets</p>
+                <p>Todos los tickets</p>
               </v-card-text>
             </v-card>
           </v-col>

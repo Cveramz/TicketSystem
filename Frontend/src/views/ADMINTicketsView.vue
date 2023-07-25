@@ -6,21 +6,9 @@
     <img src="../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
     <v-divider></v-divider>
     <p class="headline">Bienvenido al sistema de tickets</p>
-    <v-btn class="mr-4 v-btn--block mt-4" to="/dashboard">
+    <v-btn class="mr-4 v-btn--block mt-4" to="/admin">
       <v-icon>mdi-home</v-icon>
       Inicio
-    </v-btn>
-    <v-btn class="mr-4 v-btn--block mt-4" to="/mistickets">
-      <v-icon>mdi-ticket-account</v-icon>
-      Mis Tickets
-    </v-btn>
-    <v-btn class="mr-4 v-btn--block mt-4" to="/crearticket">
-      <v-icon>mdi-new-box</v-icon>
-      Crear Ticket
-    </v-btn>
-    <v-btn class="mr-4 v-btn--block mt-4" to="micuenta">
-      <v-icon>mdi-account</v-icon>
-      Administrar cuenta
     </v-btn>
 
   </v-col>
@@ -31,10 +19,10 @@
 
     <v-app-bar app color="#EA7600" class="text-white">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Sistema de Tickets: Mis Tickets</v-toolbar-title>
+      <v-toolbar-title>MODO ADMIN</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn class="btn" icon="mdi-home" to="/dashboard"></v-btn>
+      <v-btn class="btn" icon="mdi-home" to="/admin"></v-btn>
       <v-btn>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
@@ -65,16 +53,21 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" sm="8" md="6">
-            <h1 class="headline">Mis Tickets</h1>
+            <h1 class="headline">Tickets Existentes</h1>
             <v-divider class="my-4"></v-divider>
             <v-card v-for="ticket in tickets" :key="ticket.idTicket" class="my-4">
-              <v-card-title>Asunto: {{ ticket.consulta}}</v-card-title>
+              <v-card-title>ID TICKET: {{ ticket.idTicket }}</v-card-title>
               <v-card-text>
-                <p>Estado Ticket: {{ ticket.estadoTicket }}</p>
+                <p>Categoría: {{ ticket.categoria }}</p>
                 <p>Descripción: {{ ticket.descripcion }}</p>
+                <p>Consulta: {{ ticket.consulta }}</p>
                 <p>Comentarios: {{ ticket.comentarios }}</p>
+                <p>Estado Ticket: {{ ticket.estadoTicket }}</p>
+                <p>Rut del solicitante: {{ ticket.ticketRut }}</p>
                 <p>Fecha de creación: {{ formatDate(ticket.fechaCreacion) }}</p>
                 <p>Ultima Actualización: {{ ticket.ultimaActualizacion }}</p>
+                <p>Resolución: {{ ticket.resolucion }}</p>
+                <p>Prioridad: {{ ticket.prioridad }}</p>
               </v-card-text>
             </v-card>
           </v-col>
@@ -87,11 +80,11 @@
 
 <script>
 import VueCookies from 'vue-cookies';
-import MisTicketsDataService from "../services/MisTicketsDataService.js";
+import AdminModeService from "../services/AdminModeService.js";
 import moment from 'moment';
 
 export default {
-  name: 'MyTicketsView',
+  name: 'ADMINTicketsView',
   data() {
     return {
       drawer: false,
@@ -101,12 +94,12 @@ export default {
     };
   },
   mounted() {
+    this.retrieveTickets();
     // Leer la cookie al cargar el componente
     const usuarioCookie = VueCookies.get('usuario');
     if (usuarioCookie) {
       // Si la cookie existe, asignar el valor a la variable usuario
       this.usuario = usuarioCookie;
-      this.retrieveTickets();
     } else {
       // Si la cookie no existe, redirigir al login
       this.$router.push('/login');
@@ -123,7 +116,7 @@ export default {
       this.$router.push({ name: routeName });
     },
     retrieveTickets() {
-      MisTicketsDataService.getAll(this.usuario.rut) // Cambiar "this.usuario.idUsuario" por "this.usuario.rut"
+      AdminModeService.getAll()
         .then((response) => {
           this.tickets = response.data;
         })

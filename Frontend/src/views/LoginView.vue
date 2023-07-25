@@ -41,15 +41,6 @@ export default {
           this.usuario.rut = response.data.rut || '';
           // Guardar la información del usuario en una cookie
           VueCookies.set('usuario', JSON.stringify(this.usuario));
-
-          // Construir el mensaje de bienvenida con los campos disponibles
-          const mensajeBienvenida = `Bienvenido, ${this.usuario.nombre}${
-            this.usuario.apellido ? ' ' + this.usuario.apellido : ''
-          } (${this.usuario.correo}).`;
-
-          // Mostrar el mensaje de bienvenida en el alert
-          alert(mensajeBienvenida);
-
           // Redirigir a la página deseada después del inicio de sesión
           this.redirectToPage();
         } else {
