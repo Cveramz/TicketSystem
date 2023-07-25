@@ -18,58 +18,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
-@Table(
-        name = "reclamo"
-)
+@Table(name = "reclamo")
 public class TicketEntity {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
-    @Column(
-            name = "idTicket"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idTicket", unique = true)
     private Long idTicket;
-    @Column(
-            name = "categoria"
-    )
+    @Column(name = "categoria")
     private String categoria;
-    @Column(
-            name = "descripcion"
-    )
+    @Column(name = "descripcion")
     private String descripcion;
-    @Column(
-            name = "consulta"
-    )
+    @Column(name = "consulta")
     private String consulta;
-    @Column(
-            name = "comentarios"
-    )
+    @Column(name = "comentarios")
     private String comentarios;
-    @Column(
-            name = "estadoTicket"
-    )
+    @Column(name = "estadoTicket")
     private String estadoTicket;
-    @Column(
-            name = "ticketRut"
-    )
+    @Column(name = "ticketRut")
     private String ticketRut;
-    @DateTimeFormat(
-            iso = ISO.DATE_TIME
-    )
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date fechaCreacion;
-    @DateTimeFormat(
-            iso = ISO.DATE_TIME
-    )
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date ultimaActualizacion;
-    @Column(
-            name = "resolucion"
-    )
+    @Column(name = "resolucion")
     private String resolucion;
 
-    @Column(
-            name = "Prioridad"
-    )
+    @Column(name = "Prioridad")
     private String prioridad;
     /*
     @ManyToOne

@@ -7,7 +7,7 @@ import java.util.List;
 public class AnalistaEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idAnalista")
+    @Column(name = "idAnalista", unique = true)
     private Long idAnalista;
     @Column(name = "correo")
     private String correo;

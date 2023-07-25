@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class AdministradorEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idAdministrador", nullable = false)
+    @Column(name = "idAdministrador", unique = true)
     private Long idAdministrador;
     @Column(name = "Nombre")
     private String Nombre;

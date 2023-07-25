@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUsuario")
+    @Column(name = "idUsuario", unique = true)
     private Long idUsuario;
     @Column(name = "nombre")
     private String nombre;
@@ -20,14 +20,17 @@ public class UsuarioEntity {
     private String password;
     @Column(name = "rut")
     private String rut;
+    @Column(name = "tipo")
+    private String tipo;
 
-    public UsuarioEntity(Long idUsuario, String nombre, String apellido, String correo, String password, String rut) {
+    public UsuarioEntity(Long idUsuario, String nombre, String apellido, String correo, String password, String rut, String tipo) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.password = password;
         this.rut = rut;
+        this.tipo = tipo;
     }
 
     public UsuarioEntity() {
@@ -82,6 +85,12 @@ public class UsuarioEntity {
         this.rut = rut;
     }
 
+    public String getTipo(){
+        return tipo;
+    }
 
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
 }
 

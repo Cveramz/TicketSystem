@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Tickets_usuariosEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_usuario")
+    @Column(name = "id_usuario", unique = true)
     private Long id_usuario;
     @Column(name = "id_analista")
     private Long id_analista;
