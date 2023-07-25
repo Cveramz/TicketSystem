@@ -3,7 +3,7 @@
     <v-navigation-drawer app v-model="drawer" temporary color="#3934049">
 <v-layout column align-center>
   <v-col align="center">
-    <img src="../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
+    <img src="../../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
     <v-divider></v-divider>
     <p class="headline">Bienvenido al sistema de tickets</p>
     <v-btn class="mr-4 v-btn--block mt-4" to="/admin">
@@ -80,7 +80,7 @@
 
 <script>
 import VueCookies from 'vue-cookies';
-import AdminModeService from "../services/AdminModeService.js";
+import AdminModeService from "../../services/AdminModeService.js";
 import moment from 'moment';
 
 export default {

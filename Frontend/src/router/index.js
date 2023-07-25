@@ -37,17 +37,17 @@ const routes = [
   {
     path: '/admin/tickets',
     name: 'admintickets',
-    component: () => import('../views/ADMINTicketsView.vue')
+    component: () => import('../views/ADMIN-Views/ADMINTicketsView.vue')
   },
   {
     path: '/admin/dashboard',
     name: 'admindashboard',
-    component: () => import('../views/ADMINDashboardView.vue')
+    component: () => import('../views/ADMIN-Views/ADMINDashboardView.vue')
   },
   {
     path: '/admin/',
     name: 'adminhome',
-    component: () => import('../views/ADMINDashboardView.vue')
+    component: () => import('../views/ADMIN-Views/ADMINDashboardView.vue')
   },
   {
     path: '/crearticket',
