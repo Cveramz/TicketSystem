@@ -53,21 +53,16 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" sm="8" md="6">
-            <h1 class="headline">Tickets Existentes</h1>
+            <h1 class="headline">Cuentas Existentes</h1>
             <v-divider class="my-4"></v-divider>
-            <v-card v-for="ticket in tickets" :key="ticket.idTicket" class="my-4">
-              <v-card-title>ID TICKET: {{ ticket.idTicket }}</v-card-title>
+            <v-card v-for="usuario in cuentas" :key="usuario.idUsuario" class="my-4">
+              <v-card-title>ID Usuario: {{ usuario.idUsuario }}</v-card-title>
               <v-card-text>
-                <p>Categoría: {{ ticket.categoria }}</p>
-                <p>Descripción: {{ ticket.descripcion }}</p>
-                <p>Consulta: {{ ticket.consulta }}</p>
-                <p>Comentarios: {{ ticket.comentarios }}</p>
-                <p>Estado Ticket: {{ ticket.estadoTicket }}</p>
-                <p>Rut del solicitante: {{ ticket.ticketRut }}</p>
-                <p>Fecha de creación: {{ formatDate(ticket.fechaCreacion) }}</p>
-                <p>Ultima Actualización: {{ formatDate(ticket.ultimaActualizacion) }}</p>
-                <p>Resolución: {{ ticket.resolucion }}</p>
-                <p>Prioridad: {{ ticket.prioridad }}</p>
+                <p>Nombre: {{ usuario.nombre }}</p>
+                <p>Apellido: {{ usuario.apellido }}</p>
+                <p>Correo: {{ usuario.correo }}</p>
+                <p>Rut: {{ usuario.rut }}</p>
+                <p>Tipo: {{ usuario.tipo }}</p>
               </v-card-text>
             </v-card>
           </v-col>
@@ -84,17 +79,17 @@ import AdminModeService from "../../services/AdminModeService.js";
 import moment from 'moment';
 
 export default {
-  name: 'ADMINTicketsView',
+  name: 'ADMINCuentasView',
   data() {
     return {
       drawer: false,
-      tickets: [],
+      cuentas: [],
       usuario: {}, // Variable para almacenar la información del usuario
       dialog: false,
     };
   },
   mounted() {
-    this.retrieveTickets();
+    this.retrieveCuentas();
     // Leer la cookie al cargar el componente
     const usuarioCookie = VueCookies.get('usuario');
     if (usuarioCookie) {
@@ -115,10 +110,10 @@ export default {
   redirectTo(routeName) {
       this.$router.push({ name: routeName });
     },
-    retrieveTickets() {
-      AdminModeService.getAll()
+    retrieveCuentas() {
+      AdminModeService.getAllUsers()
         .then((response) => {
-          this.tickets = response.data;
+          this.cuentas = response.data;
         })
         .catch((e) => {
           console.log(e);

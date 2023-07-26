@@ -55,6 +55,16 @@ const routes = [
     component: () => import('../views/ADMIN-Views/ADMINDeleteTicketsView.vue')
   },
   {
+    path: '/admin/cuentas',
+    name: 'admincuentas',
+    component: () => import('../views/ADMIN-Views/ADMINCuentasView.vue')
+  },
+  {
+    path: '/admin/responderticket',
+    name: 'adminresponderticket',
+    component: () => import('../views/ADMIN-Views/ADMINReplyTicket.vue')
+  },
+  {
     path: '/invitado/',
     name: 'invitado',
     component: () => import('../views/INVITADO-Views/CreateTicketView.vue')

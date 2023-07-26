@@ -42,6 +42,24 @@ public class TicketController {
         return new ResponseEntity<>(Ticket, HttpStatus.OK);
     }
 
+    @PutMapping("/ticket/{id}")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<TicketEntity> actualizarTicket(@PathVariable Long id, @RequestBody TicketEntity ticketModificado) {
+        // Verificar que el ticket con el ID especificado existe en la base de datos
+        Optional<TicketEntity> ticketExistente = ticketService.obtenerIdTicket(id);
+        if (ticketExistente.isEmpty()) {
+            return new ResponseEntity("Ticket no existe", HttpStatus.NOT_FOUND);
+        }
+
+        // Establecer el ID del ticket modificado con el ID existente para actualizarlo
+        ticketModificado.setIdTicket(id);
+
+        // Guardar el ticket modificado en la base de datos
+        TicketEntity ticketActualizado = ticketService.actualizarTicket(ticketModificado);
+
+        return new ResponseEntity<>(ticketActualizado, HttpStatus.OK);
+    }
+
     @GetMapping({"/tickets/"})
     @CrossOrigin({"*"})
     public Iterable<TicketEntity> obtenerTodosTicket() {

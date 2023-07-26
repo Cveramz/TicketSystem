@@ -70,14 +70,28 @@
                 <p>Todos los tickets</p>
               </v-card-text>
             </v-card>
+
+            <v-card class="dashboard-card" to="/admin/cuentas">
+              <v-card-text class="dashboard-card-text">
+                <v-icon size="48" class="dashboard-card-icon">mdi-folder-account</v-icon>
+                <p>Todas las cuentas</p>
+              </v-card-text>
+            </v-card>
           </v-col>
 
           <!-- Crear Ticket -->
           <v-col cols="12" md="4">
-            <v-card class="dashboard-card" to="/crearticket">
+            <v-card class="dashboard-card" to="/admin/responderticket">
               <v-card-text class="dashboard-card-text">
                 <v-icon size="48" class="dashboard-card-icon">mdi-message-reply</v-icon>
                 <p>Responder ticket</p>
+              </v-card-text>
+            </v-card>
+
+            <v-card class="dashboard-card" to="#">
+              <v-card-text class="dashboard-card-text">
+                <v-icon size="48" class="dashboard-card-icon">mdi-card-account-details-outline</v-icon>
+                <p>Editar cuentas</p>
               </v-card-text>
             </v-card>
           </v-col>
@@ -88,6 +102,13 @@
               <v-card-text class="dashboard-card-text">
                 <v-icon size="48" class="dashboard-card-icon">mdi-delete-circle</v-icon>
                 <p>Eliminar Ticket</p>
+              </v-card-text>
+            </v-card>
+
+            <v-card class="dashboard-card" to="#">
+              <v-card-text class="dashboard-card-text">
+                <v-icon size="48" class="dashboard-card-icon">mdi-account-multiple-remove-outline</v-icon>
+                <p>Eliminar cuentas</p>
               </v-card-text>
             </v-card>
           </v-col>

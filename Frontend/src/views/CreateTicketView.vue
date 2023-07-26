@@ -134,6 +134,7 @@ cerrarSesion() {
 },
 async crearTicket() {
         const ticketRut = CreateTicketService.transformStringToInt(this.usuario.rut);
+        
         // Crear el objeto JSON con la información del ticket
         const ticket = {
           categoria: this.categoria,
