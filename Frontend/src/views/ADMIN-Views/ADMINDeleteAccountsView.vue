@@ -3,20 +3,12 @@
     <v-navigation-drawer app v-model="drawer" temporary color="#3934049">
 <v-layout column align-center>
   <v-col align="center">
-    <img src="../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
+    <img src="../../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
     <v-divider></v-divider>
     <p class="headline">Bienvenido al sistema de tickets</p>
-    <v-btn class="mr-4 v-btn--block mt-4" to="/dashboard">
+    <v-btn class="mr-4 v-btn--block mt-4" to="/admin">
       <v-icon>mdi-home</v-icon>
       Inicio
-    </v-btn>
-    <v-btn class="mr-4 v-btn--block mt-4" to="/mistickets">
-      <v-icon>mdi-ticket-account</v-icon>
-      Mis Tickets
-    </v-btn>
-    <v-btn class="mr-4 v-btn--block mt-4" to="/crearticket">
-      <v-icon>mdi-new-box</v-icon>
-      Crear Ticket
     </v-btn>
 
   </v-col>
@@ -25,12 +17,12 @@
 
 
 
-    <v-app-bar app color="#EA7600" class="text-white">
+    <v-app-bar app color="#00a499" class="text-white">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Sistema de Tickets: Mis Tickets</v-toolbar-title>
+      <v-toolbar-title>MODO ADMIN</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn class="btn" icon="mdi-home" to="/dashboard"></v-btn>
+      <v-btn class="btn" icon="mdi-home" to="/admin"></v-btn>
       <v-btn>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
@@ -57,26 +49,22 @@
 </v-card>
 </v-dialog>
 
-<v-main>
+    <v-main>
       <v-container>
         <v-row justify="center">
           <v-col cols="12" sm="8" md="6">
-            <h1 class="headline">Mis Tickets</h1>
+            <h1 class="headline">Cuentas Existentes</h1>
             <v-divider class="my-4"></v-divider>
-            <!-- Mostrar mensaje cuando no hay tickets -->
-            <div v-if="tickets.length === 0">
-              <p>No existen tickets asociados a esta cuenta.</p>
-            </div>
-            <!-- Mostrar los tickets si existen -->
-            <v-card v-for="ticket in tickets" :key="ticket.idTicket" class="my-4">
-              <v-card-title>Asunto: {{ ticket.consulta}}</v-card-title>
+            <v-card v-for="usuario in cuentas" :key="usuario.idUsuario" class="my-4">
+              <v-card-title>ID Usuario: {{ usuario.idUsuario }}</v-card-title>
               <v-card-text>
-                <p>Estado Ticket: {{ ticket.estadoTicket }}</p>
-                <p>Descripción: {{ ticket.descripcion }}</p>
-                <p>Comentarios: {{ ticket.comentarios }}</p>
-                <p>Fecha de creación: {{ formatDate(ticket.fechaCreacion) }}</p>
-                <p>Ultima Actualización: {{ ticket.ultimaActualizacion }}</p>
+                <p>Nombre: {{ usuario.nombre }}</p>
+                <p>Apellido: {{ usuario.apellido }}</p>
+                <p>Correo: {{ usuario.correo }}</p>
+                <p>Rut: {{ usuario.rut }}</p>
+                <p>Tipo: {{ usuario.tipo }}</p>
               </v-card-text>
+              <v-btn color="#EA3900" @click="deleteUser(usuario)">Eliminar</v-btn>
             </v-card>
           </v-col>
         </v-row>
@@ -88,26 +76,26 @@
 
 <script>
 import VueCookies from 'vue-cookies';
-import MisTicketsDataService from "../services/MisTicketsDataService.js";
+import AdminModeService from "../../services/AdminModeService.js";
 import moment from 'moment';
 
 export default {
-  name: 'MyTicketsView',
+  name: 'ADMINCuentasView',
   data() {
     return {
       drawer: false,
-      tickets: [],
+      cuentas: [],
       usuario: {}, // Variable para almacenar la información del usuario
       dialog: false,
     };
   },
   mounted() {
+    this.retrieveCuentas();
     // Leer la cookie al cargar el componente
     const usuarioCookie = VueCookies.get('usuario');
     if (usuarioCookie) {
       // Si la cookie existe, asignar el valor a la variable usuario
       this.usuario = usuarioCookie;
-      this.retrieveTickets();
     } else {
       // Si la cookie no existe, redirigir al login
       this.$router.push('/login');
@@ -123,13 +111,13 @@ export default {
   redirectTo(routeName) {
       this.$router.push({ name: routeName });
     },
-    retrieveTickets() {
-      MisTicketsDataService.getAll(this.usuario.rut) // Cambiar "this.usuario.idUsuario" por "this.usuario.rut"
+    retrieveCuentas() {
+      AdminModeService.getAllUsers()
         .then((response) => {
-          this.tickets = response.data;
+          this.cuentas = response.data;
         })
         .catch((e) => {
-          
+          console.log(e);
         });
     },
     formatDate(date) {
@@ -137,6 +125,18 @@ export default {
         return moment(String(date)).format('DD/MM/YYYY hh:mm');
       }
     },
+    async deleteUser(usuario) {
+  try {
+    const response = await AdminModeService.deleteUser(usuario.correo);
+    console.log(response.data);
+    this.retrieveCuentas();
+    alert("Usuario eliminado");
+  } catch (e) {
+    console.log(e);
+    alert("Error al eliminar usuario");
+  }
+},
+
 }
 };
 </script>

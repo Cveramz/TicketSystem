@@ -18,10 +18,6 @@
       <v-icon>mdi-new-box</v-icon>
       Crear Ticket
     </v-btn>
-    <v-btn class="mr-4 v-btn--block mt-4" to="micuenta">
-      <v-icon>mdi-account</v-icon>
-      Administrar cuenta
-    </v-btn>
 
   </v-col>
 </v-layout>

@@ -74,5 +74,29 @@ public class UsuarioController{
         usuarioService.changePassword(password, rut);
         return new ResponseEntity<>("Contraseña actualizada", HttpStatus.ACCEPTED);
     }
+
+    @PutMapping("/usuario/{id}")
+    public ResponseEntity<UsuarioEntity> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioEntity usuarioActualizado) {
+        Optional<UsuarioEntity> usuarioOpt = usuarioService.obtenerUsuario(id);
+        if (usuarioOpt.isPresent()) {
+            UsuarioEntity usuarioExistente = usuarioOpt.get();
+            // Actualizar los datos del usuario existente con los nuevos datos
+            usuarioExistente.setNombre(usuarioActualizado.getNombre());
+            usuarioExistente.setApellido(usuarioActualizado.getApellido());
+            usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
+            usuarioExistente.setPassword(usuarioActualizado.getPassword());
+            usuarioExistente.setTipo(usuarioActualizado.getTipo());
+
+            UsuarioEntity usuarioActualizadoEntity = usuarioService.guardar(usuarioExistente);
+            return new ResponseEntity<>(usuarioActualizadoEntity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+
+
 }
 

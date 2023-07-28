@@ -3,20 +3,12 @@
       <v-navigation-drawer app v-model="drawer" temporary color="#3934049">
   <v-layout column align-center>
     <v-col align="center">
-      <img src="../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
+      <img src="../../assets/Logos/UsachS1.png" alt="" style="max-width: 100%;" />
       <v-divider></v-divider>
       <p class="headline">Bienvenido al sistema de tickets</p>
-      <v-btn class="mr-4 v-btn--block mt-4" to="/dashboard">
+      <v-btn class="mr-4 v-btn--block mt-4" to="#">
         <v-icon>mdi-home</v-icon>
         Inicio
-      </v-btn>
-      <v-btn class="mr-4 v-btn--block mt-4" to="/mistickets">
-        <v-icon>mdi-ticket-account</v-icon>
-        Mis Tickets
-      </v-btn>
-      <v-btn class="mr-4 v-btn--block mt-4" to="/crearticket">
-        <v-icon>mdi-new-box</v-icon>
-        Crear Ticket
       </v-btn>
 
     </v-col>
@@ -25,12 +17,12 @@
 
 
   
-      <v-app-bar app color="#EA7600" class="text-white">
+      <v-app-bar app color="#394049 " class="text-white">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>Sistema de Tickets: Inicio</v-toolbar-title>
+        <v-toolbar-title>MODO ANALISTA</v-toolbar-title>
   
         <v-spacer></v-spacer>
-        <v-btn class="btn" icon="mdi-home" to="/dashboard"></v-btn>
+        <v-btn class="btn" icon="mdi-home" to="#"></v-btn>
         <v-btn>
           <v-icon>mdi-bell</v-icon>
         </v-btn>
@@ -72,20 +64,20 @@
         <v-row>
           <!-- Mis Tickets -->
           <v-col cols="12" md="4">
-            <v-card class="dashboard-card" to="/mistickets">
+            <v-card class="dashboard-card" to="/analista/tickets">
               <v-card-text class="dashboard-card-text">
                 <v-icon size="48" class="dashboard-card-icon">mdi-ticket-account</v-icon>
-                <p>Mis Tickets</p>
+                <p>Todos los tickets</p>
               </v-card-text>
             </v-card>
           </v-col>
 
           <!-- Crear Ticket -->
           <v-col cols="12" md="4">
-            <v-card class="dashboard-card" to="/crearticket">
+            <v-card class="dashboard-card" to="/analista/responderticket">
               <v-card-text class="dashboard-card-text">
-                <v-icon size="48" class="dashboard-card-icon">mdi-new-box</v-icon>
-                <p>Crear Ticket</p>
+                <v-icon size="48" class="dashboard-card-icon">mdi-message-reply</v-icon>
+                <p>Responder ticket</p>
               </v-card-text>
             </v-card>
           </v-col>
@@ -162,6 +154,6 @@ export default {
 }
 
 .dashboard-card-icon {
-  color: #ea7600;
+  color: #394049 ;
 }
 </style>

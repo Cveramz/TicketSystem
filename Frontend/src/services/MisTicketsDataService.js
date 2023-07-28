@@ -17,8 +17,7 @@ class MisTicketsDataService {
       // Hacer la solicitud HTTP utilizando el ID del usuario
       return http.get(`/tickets-rut/${userIdInt}`);
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.log('no se pudo obtener los tickets del usuario con ID: ' + userId);
     }
   }
 }

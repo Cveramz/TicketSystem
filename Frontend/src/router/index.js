@@ -65,6 +65,36 @@ const routes = [
     component: () => import('../views/ADMIN-Views/ADMINReplyTicket.vue')
   },
   {
+    path: '/admin/eliminarcuentas',
+    name: 'admineliminarcuentas',
+    component: () => import('../views/ADMIN-Views/ADMINDeleteAccountsView.vue')
+  },
+  {
+    path: '/admin/administrarcuentas',
+    name: 'adminadministrarcuentas',
+    component: () => import('../views/ADMIN-Views/ADMINAdminAccountsView.vue')
+  },
+  {
+    path: '/analista',
+    name: 'analista',
+    component: () => import('../views/ANALISTA-Views/ANALISTADashboardView.vue')
+  },
+  {
+    path: '/analista/dashboard',
+    name: 'analistadashboard',
+    component: () => import('../views/ANALISTA-Views/ANALISTADashboardView.vue')
+  },
+  {
+    path: '/analista/tickets',
+    name: 'analistatickets',
+    component: () => import('../views/ANALISTA-Views/ANALISTATicketsView.vue')
+  },
+  {
+    path: '/analista/responderticket',
+    name: 'analistaresponderticket',
+    component: () => import('../views/ANALISTA-Views/ANALISTAReplyTicketView.vue')
+  },
+  {
     path: '/invitado/',
     name: 'invitado',
     component: () => import('../views/INVITADO-Views/CreateTicketView.vue')
@@ -73,11 +103,6 @@ const routes = [
     path: '/crearticket',
     name: 'crearticket',
     component: () => import('../views/CreateTicketView.vue')
-  },
-  {
-    path: '/micuenta',
-    name: 'micuenta',
-    component: () => import('../views/MyAccountView.vue')
   },
   {
     path: '/ticketstatus',

@@ -15,6 +15,7 @@ export default {
         apellido: '',
         correo: '',
         rut: '',
+        tipo: null,
       },
       emailrules: [
         v => !!v || 'El correo es requerido',
@@ -29,7 +30,7 @@ export default {
     // Si existe una cookie, se envía directamente a la página de inicio (dashboard)
     const usuarioCookie = VueCookies.get('usuario');
     if (usuarioCookie) {
-      this.redirectToPage();      
+
     }
   },
   methods: {
@@ -45,11 +46,14 @@ export default {
           this.usuario.nombre = response.data.nombre;
           this.usuario.apellido = response.data.apellido || '';
           this.usuario.correo = response.data.correo;
+          this.usuario.tipo = response.data.tipo || '';
           this.usuario.rut = response.data.rut || '';
           // Guardar la información del usuario en una cookie
           VueCookies.set('usuario', JSON.stringify(this.usuario));
-          // Redirigir a la página deseada después del inicio de sesión
+          // Redireccionar a la página deseada
           this.redirectToPage();
+
+
         } else {
           alert('Error al obtener los datos del usuario.');
         }
@@ -77,7 +81,16 @@ export default {
     },
     redirectToPage() {
       // Redireccionar a la página deseada
-      this.$router.push('/dashboard');
+      //si tipo== Administrado o SuperAdministrador redireccionar a /admin
+      //si tipo== Analista redireccionar a /analista
+      //o por su defecto a /dashboard
+      if (this.usuario.tipo == 'Administrador' || this.usuario.tipo == 'Super Administrador') {
+        this.$router.push('/admin');
+      } else if (this.usuario.tipo == 'Analista') {
+        this.$router.push('/analista');
+      } else {
+        this.$router.push('/dashboard');
+      }
     }
   }
 };

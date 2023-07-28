@@ -28,6 +28,15 @@ class AdminModeService {
         }
     }
 
+    deleteUser(correo) {
+        try {
+          return http.delete(`/usuario/${correo}`);
+        } catch (error) {
+          alert(error);
+        }
+      }
+      
+
     async editTicket(ticket) {
         try {
             // Obtén el ID del ticket que deseas modificar
@@ -41,6 +50,23 @@ class AdminModeService {
             throw error;
         }
     }
+    getUserById(id) {
+        try {
+          return http.get(`/usuario/${id}`);
+        } catch (error) {
+          // Manejar el error si ocurriera algún problema en la petición
+          console.error("Error al obtener el usuario:", error);
+          throw error;
+        }
+        }
+        async actualizarUsuario(usuarioActualizado) {
+          try {
+            const response = await http.put(`/usuario/${usuarioActualizado.idUsuario}`, usuarioActualizado);
+            return response.data;
+          } catch (error) {
+            throw error;
+          }
+        }
 }
 
 export default new AdminModeService();

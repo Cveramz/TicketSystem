@@ -88,7 +88,7 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="dashboard-card" to="#">
+            <v-card class="dashboard-card" to="/admin/administrarcuentas">
               <v-card-text class="dashboard-card-text">
                 <v-icon size="48" class="dashboard-card-icon">mdi-card-account-details-outline</v-icon>
                 <p>Editar cuentas</p>
@@ -105,7 +105,7 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="dashboard-card" to="#">
+            <v-card class="dashboard-card" to="/admin/eliminarcuentas">
               <v-card-text class="dashboard-card-text">
                 <v-icon size="48" class="dashboard-card-icon">mdi-account-multiple-remove-outline</v-icon>
                 <p>Eliminar cuentas</p>
